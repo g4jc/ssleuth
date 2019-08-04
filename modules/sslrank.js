@@ -1,6 +1,6 @@
 'use strict';
 
-var EXPORTED_SYMBOLS = ['ssleuth'];
+var EXPORTED_SYMBOLS = ['sslrank'];
 
 const Cc = Components.classes;
 const Ci = Components.interfaces;
@@ -9,14 +9,14 @@ const Cu = Components.utils;
 Cu.import('resource://gre/modules/XPCOMUtils.jsm');
 Cu.import('resource://gre/modules/Services.jsm');
 
-Cu.import('resource://ssleuth/utils.js');
-Cu.import('resource://ssleuth/cipher-suites.js');
-Cu.import('resource://ssleuth/observer.js');
-Cu.import('resource://ssleuth/ssleuth-ui.js');
-Cu.import('resource://ssleuth/preferences.js');
-Cu.import('resource://ssleuth/windows.js');
+Cu.import('resource://sslrank/utils.js');
+Cu.import('resource://sslrank/cipher-suites.js');
+Cu.import('resource://sslrank/observer.js');
+Cu.import('resource://sslrank/sslrank-ui.js');
+Cu.import('resource://sslrank/preferences.js');
+Cu.import('resource://sslrank/windows.js');
 
-var ssleuth = (function () {
+var sslrank = (function () {
     var initPrefs = null;
 
     var startup = function (firstRun, reinstall) {
@@ -31,7 +31,7 @@ var ssleuth = (function () {
             ui.startup(initPrefs);
             windows.init(initWindow, uninitWindow);
         } catch (e) {
-            log.error('Error preferences ssleuth init : ' + e.message);
+            log.error('Error preferences sslrank init : ' + e.message);
         }
     };
 
@@ -45,7 +45,7 @@ var ssleuth = (function () {
     };
 
     var uninstall = function () {
-        Services.prefs.getBranch('extensions.ssleuth').deleteBranch('');
+        Services.prefs.getBranch('extensions.sslrank').deleteBranch('');
     };
 
     var initWindow = function (win) {
@@ -58,7 +58,7 @@ var ssleuth = (function () {
             ui.init(win);
 
         } catch (e) {
-            log.error('Error ssleuth init : ' + e.message);
+            log.error('Error sslrank init : ' + e.message);
             uninitWindow(win);
         }
     };
@@ -398,7 +398,7 @@ var protocol = (function () {
         // Weak keys are rated down.
         !cert.pubKeyMinSecure && (cert.signatureAlg.rating = 0);
 
-        const csWeighting = ssleuth.prefs['rating.ciphersuite.params'];
+        const csWeighting = sslrank.prefs['rating.ciphersuite.params'];
         // Calculate ciphersuite rank  - All the cipher suite params ratings
         // are out of 10, so this will get normalized to 10.
         cipherSuite.rank = (cipherSuite.keyExchange.rank * csWeighting.keyExchange +
@@ -435,7 +435,7 @@ var protocol = (function () {
 
 
 function getConnectionRating(csRating, pfs, ffStatus, certStatus, evCert, signature) {
-    const rp = ssleuth.prefs['rating.params'];
+    const rp = sslrank.prefs['rating.params'];
     // Connection rating. Normalize the params to 10
     var rating = (csRating * rp.cipherSuite + pfs * 10 * rp.pfs +
         Number(ffStatus === 'Secure') * 10 * rp.ffStatus +
@@ -529,7 +529,7 @@ function checkPFS(cipherName) {
 
 function getCipherSuiteRating(cipherName) {
     const cs = ciphersuites,
-        csW = ssleuth.prefs['rating.ciphersuite.params'];
+        csW = sslrank.prefs['rating.ciphersuite.params'];
 
     function getRating(csParam) {
         for (var i = 0; i < csParam.length; i++) {
@@ -651,9 +651,9 @@ function toggleCipherSuites(prefsOld) {
         SUITES_TOGGLE = 'suites.toggle',
         PREF_SUITES_TOGGLE = preferences.BRANCH + SUITES_TOGGLE;
 
-    for (var t = 0; t < ssleuth.prefs[SUITES_TOGGLE].length; t++) {
+    for (var t = 0; t < sslrank.prefs[SUITES_TOGGLE].length; t++) {
 
-        var cs = ssleuth.prefs[SUITES_TOGGLE][t];
+        var cs = sslrank.prefs[SUITES_TOGGLE][t];
         switch (cs.state) {
         case 'default':
             // Check if the element was present before.
@@ -671,9 +671,9 @@ function toggleCipherSuites(prefsOld) {
             for (var i = 0; i < cs.list.length; i++) {
                 prefs.clearUserPref(br + cs.list[i]);
             }
-            ssleuth.prefs[SUITES_TOGGLE][t] = cs;
+            sslrank.prefs[SUITES_TOGGLE][t] = cs;
             prefs.setCharPref(PREF_SUITES_TOGGLE,
-                JSON.stringify(ssleuth.prefs[SUITES_TOGGLE]));
+                JSON.stringify(sslrank.prefs[SUITES_TOGGLE]));
             break;
 
             // Only toggle these if they actually exist! Do not mess up
@@ -707,17 +707,17 @@ function toggleCipherSuites(prefsOld) {
 var prefListener = function (branch, name) {
     switch (name) {
     case 'rating.params':
-        ssleuth.prefs[name] =
+        sslrank.prefs[name] =
             JSON.parse(branch.getCharPref(name));
         break;
     case 'rating.ciphersuite.params':
-        ssleuth.prefs[name] =
+        sslrank.prefs[name] =
             JSON.parse(branch.getCharPref(name));
         break;
     case 'suites.toggle':
         // TODO : No need for a cloned array here ?
-        var prefsOld = ssleuth.prefs[name];
-        ssleuth.prefs[name] =
+        var prefsOld = sslrank.prefs[name];
+        sslrank.prefs[name] =
             JSON.parse(branch.getCharPref(name));
         toggleCipherSuites(prefsOld);
         break;

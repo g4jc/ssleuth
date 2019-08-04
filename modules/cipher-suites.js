@@ -319,7 +319,7 @@ const connectionRating = {
 };
 
 /* The cipher suites preferences are boolean flags, and can be toggled
- * to true/false. However, SSleuth maintains 4 states for a toggle.
+ * to true/false. However, SSLRank maintains 4 states for a toggle.
  * - 4 states mainly for being nice to other addons doing toggle
  * and to respect user's own preferences.
  *    1. default - nothing is done in this case.
@@ -392,7 +392,7 @@ const tlsVersions = {
 
 
     ff_cache: {
-        ui: '<Firefox cache. Reload page>',
+        ui: '<Browser cache. Reload page>',
         state: 'okay'
     }
 }

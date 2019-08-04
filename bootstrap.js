@@ -7,7 +7,7 @@ Cu.import('resource://gre/modules/XPCOMUtils.jsm');
 Cu.import('resource://gre/modules/Services.jsm');
 
 const scriptId = Date.now(),
-    framescriptURI = 'chrome://ssleuth/content/framescript.js?' + scriptId;
+    framescriptURI = 'chrome://sslrank/content/framescript.js?' + scriptId;
 
 // install & uninstall are called even for disabled extensions
 function install(data, reason) {}
@@ -19,8 +19,8 @@ function uninstall(data, reason) {
     // updating=ADDON_UPGRADE
     if (reason === ADDON_UNINSTALL) {
         var ss = {};
-        Cu.import('resource://ssleuth/ssleuth.js', ss);
-        ss.ssleuth.uninstall();
+        Cu.import('resource://sslrank/sslrank.js', ss);
+        ss.sslrank.uninstall();
     }
 
     // update/uninstall: unload all modules
@@ -51,13 +51,13 @@ function startup(data, reason) {
         // Load framescript into all existing and future windows.
         Services.mm.loadFrameScript(framescriptURI, true);
 
-        Services.mm.broadcastAsyncMessage('ssleuth@github:script-id', {
+        Services.mm.broadcastAsyncMessage('sslrank@hyperbola.info:script-id', {
             id: scriptId
         });
 
-        Cu.import('resource://ssleuth/ssleuth.js', ss);
+        Cu.import('resource://sslrank/sslrank.js', ss);
 
-        ss.ssleuth.startup(firstRun, reinstall);
+        ss.sslrank.startup(firstRun, reinstall);
 
     } catch (e) {
         dump('Error bootstrap : ' + e.message + '\n');
@@ -76,12 +76,12 @@ function shutdown(data, reason) {
 
         // Unload existing ones with a script id
         // bug 1202125, bug 1051238
-        Services.mm.broadcastAsyncMessage('ssleuth@github:shutdown', {
+        Services.mm.broadcastAsyncMessage('sslrank@hyperbola.info:shutdown', {
             id: scriptId
         });
 
-        Cu.import('resource://ssleuth/ssleuth.js', ss);
-        ss.ssleuth.shutdown();
+        Cu.import('resource://sslrank/sslrank.js', ss);
+        ss.sslrank.shutdown();
 
         unloadModules();
         registerResourceProtocol(null);
@@ -94,13 +94,13 @@ function unloadModules() {
     for (var module of['preferences.js',
             'cipher-suites.js',
             'panel.js',
-            'ssleuth-ui.js',
+            'sslrank-ui.js',
             'observer.js',
-            'ssleuth.js',
+            'sslrank.js',
             'windows.js',
             'utils.js',
             ]) {
-        Cu.unload('resource://ssleuth/' + module);
+        Cu.unload('resource://sslrank/' + module);
     }
 }
 
@@ -109,5 +109,5 @@ function registerResourceProtocol(uri) { // null to unregister
     var module = uri ? io.newURI(uri.resolve('modules/'), null, null) : null;
 
     io.getProtocolHandler('resource').QueryInterface(Ci.nsIResProtocolHandler)
-        .setSubstitution('ssleuth', module);
+        .setSubstitution('sslrank', module);
 }

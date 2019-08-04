@@ -7,12 +7,12 @@ const Cu = Components.utils;
 Cu.import('resource://gre/modules/XPCOMUtils.jsm');
 Cu.import('resource://gre/modules/Services.jsm');
 
-Cu.import('resource://ssleuth/utils.js');
-Cu.import('resource://ssleuth/cipher-suites.js');
-Cu.import('resource://ssleuth/preferences.js');
-Cu.import('resource://ssleuth/observer.js');
-Cu.import('resource://ssleuth/panel.js');
-Cu.import('resource://ssleuth/windows.js');
+Cu.import('resource://sslrank/utils.js');
+Cu.import('resource://sslrank/cipher-suites.js');
+Cu.import('resource://sslrank/preferences.js');
+Cu.import('resource://sslrank/observer.js');
+Cu.import('resource://sslrank/panel.js');
+Cu.import('resource://sslrank/windows.js');
 
 var ui = (function () {
     var buttonLocation = {
@@ -20,7 +20,7 @@ var ui = (function () {
             TOOLBAR: 1
         },
         currentLocation = null,
-        // Reference to SSleuth.prefs
+        // Reference to SSLRank.prefs
         prefs = null;
 
     var startup = function (_prefs) {
@@ -34,8 +34,8 @@ var ui = (function () {
 
     var init = function (win) {
         currentLocation = prefs['notifier.location'];
-        var ssleuthButton = createButton(win);
-        installButton(ssleuthButton,
+        var sslrankButton = createButton(win);
+        installButton(sslrankButton,
             true,
             win.document);
 
@@ -55,10 +55,10 @@ var ui = (function () {
         // Cleanup everything! 
         // Removing the button deletes the overlay elements as well 
         try {
-            removeButton(_ssleuthButton(win));
+            removeButton(_sslrankButton(win));
             deleteKeyShortcut(win.document);
         } catch (e) {
-            log.error('Error SSleuth UI uninit : ' + e.message);
+            log.error('Error SSLRank UI uninit : ' + e.message);
         }
     };
 
@@ -68,16 +68,16 @@ var ui = (function () {
 
         // If the user is navigating with the domains tab reload the data.
         // resetDomains(win, winId);
-        if (win.document.getElementById('ssleuth-paneltab-domains')
+        if (win.document.getElementById('sslrank-paneltab-domains')
             .getAttribute('_selected') === 'true') {
             loadDomainsTab(win, winId);
         }
 
         // If the user navigates the tabs with the panel open, 
         //  make it appear smooth. 
-        var ssleuthPanel = panel(win).element;
-        if (ssleuthPanel.state === 'open') {
-            showPanel(ssleuthPanel, true, win);
+        var sslrankPanel = panel(win).element;
+        if (sslrankPanel.state === 'open') {
+            showPanel(sslrankPanel, true, win);
         }
 
     };
@@ -90,16 +90,16 @@ var ui = (function () {
             setButtonRank(-1, proto, win);
             setBoxHidden('https', true, win);
             setBoxHidden('http', true, win);
-            doc.getElementById('ssleuth-img-cipher-rank-star').hidden = true;
+            doc.getElementById('sslrank-img-cipher-rank-star').hidden = true;
             break;
 
         case 'http':
             setButtonRank('0.0', proto, win);
             setBoxHidden('https', true, win);
             setBoxHidden('http', false, win);
-            doc.getElementById('ssleuth-img-cipher-rank-star').hidden = true;
+            doc.getElementById('sslrank-img-cipher-rank-star').hidden = true;
 
-            var panelLink = doc.getElementById('ssleuth-panel-https-link');
+            var panelLink = doc.getElementById('sslrank-panel-https-link');
             panelLink.href = data;
             panelLink.setAttribute('value', data);
             break;
@@ -107,7 +107,7 @@ var ui = (function () {
         case 'https':
             setBoxHidden('https', false, win);
             setBoxHidden('http', true, win);
-            doc.getElementById('ssleuth-img-cipher-rank-star').hidden = false;
+            doc.getElementById('sslrank-img-cipher-rank-star').hidden = false;
 
             try {
                 fillPanel(data, win, winId);
@@ -118,14 +118,14 @@ var ui = (function () {
         }
 
         //log.debug ('Box height -- ' + 
-        //  doc.getElementById('ssleuth-panel-main-vbox').scrollHeight);
+        //  doc.getElementById('sslrank-panel-main-vbox').scrollHeight);
 
         //  Fixing the height of the panel is a pain. For some strange reasons, 
         //  without setting this twice, the panel height won't be proper.
-        doc.getElementById('ssleuth-panel-domains-vbox')
-            .setAttribute('maxheight', doc.getElementById('ssleuth-panel-main-vbox').scrollHeight);
-        doc.getElementById('ssleuth-panel-domains-vbox')
-            .setAttribute('maxheight', doc.getElementById('ssleuth-panel-main-vbox').scrollHeight);
+        doc.getElementById('sslrank-panel-domains-vbox')
+            .setAttribute('maxheight', doc.getElementById('sslrank-panel-main-vbox').scrollHeight);
+        doc.getElementById('sslrank-panel-domains-vbox')
+            .setAttribute('maxheight', doc.getElementById('sslrank-panel-main-vbox').scrollHeight);
 
     };
 
@@ -140,7 +140,7 @@ var ui = (function () {
     var domainsUpdated = function (tab) {
         // Reload the tab, only if user is navigating with domains
         var win = windows.recentWindow;
-        if (win.document.getElementById('ssleuth-paneltab-domains')
+        if (win.document.getElementById('sslrank-paneltab-domains')
             .getAttribute('_selected') === 'true') {
             loadDomainsTab(win, tab);
         }
@@ -167,24 +167,24 @@ var ui = (function () {
 
 }());
 
-function _ssleuthButton(win) {
+function _sslrankButton(win) {
     if (ui.currentLocation == ui.buttonLocation.TOOLBAR) {
-        return win.document.getElementById('ssleuth-tb-button');
+        return win.document.getElementById('sslrank-tb-button');
     } else if (ui.currentLocation == ui.buttonLocation.URLBAR) {
-        return win.document.getElementById('ssleuth-box-urlbar');
+        return win.document.getElementById('sslrank-box-urlbar');
     }
 }
 
-function _ssleuthBtnImg(win) {
+function _sslrankBtnImg(win) {
     if (ui.currentLocation == ui.buttonLocation.TOOLBAR) {
-        return win.document.getElementById('ssleuth-tb-button');
+        return win.document.getElementById('sslrank-tb-button');
     } else if (ui.currentLocation == ui.buttonLocation.URLBAR) {
-        return win.document.getElementById('ssleuth-ub-img');
+        return win.document.getElementById('sslrank-ub-img');
     }
 }
 
 function loadStyleSheet() {
-    registerSheet('ssleuth.css');
+    registerSheet('sslrank.css');
     if (utils.getPlatform() == 'Darwin')
         registerSheet('darwin.css');
 
@@ -193,14 +193,14 @@ function loadStyleSheet() {
             .getService(Ci.nsIStyleSheetService);
         var ios = Cc['@mozilla.org/network/io-service;1']
             .getService(Ci.nsIIOService);
-        var uri = ios.newURI('chrome://ssleuth/skin/' + file, null, null);
+        var uri = ios.newURI('chrome://sslrank/skin/' + file, null, null);
         if (!sss.sheetRegistered(uri, sss.USER_SHEET))
             sss.loadAndRegisterSheet(uri, sss.USER_SHEET);
     }
 }
 
 function removeStyleSheet() {
-    unregisterSheet('ssleuth.css');
+    unregisterSheet('sslrank.css');
     if (utils.getPlatform() == 'Darwin')
         unregisterSheet('darwin.css');
 
@@ -209,18 +209,18 @@ function removeStyleSheet() {
             .getService(Ci.nsIStyleSheetService);
         var ios = Cc['@mozilla.org/network/io-service;1']
             .getService(Ci.nsIIOService);
-        var uri = ios.newURI('chrome://ssleuth/skin/' + file, null, null);
+        var uri = ios.newURI('chrome://sslrank/skin/' + file, null, null);
         if (sss.sheetRegistered(uri, sss.USER_SHEET))
             sss.unregisterSheet(uri, sss.USER_SHEET);
     }
 }
 
-function installButton(ssleuthButton, firstRun, document) {
+function installButton(sslrankButton, firstRun, document) {
     try {
         if (ui.currentLocation === ui.buttonLocation.TOOLBAR) {
             var toolbar = document.getElementById('nav-bar');
-            var toolbarButton = ssleuthButton;
-            var buttonId = 'ssleuth-tb-button';
+            var toolbarButton = sslrankButton;
+            var buttonId = 'sslrank-tb-button';
 
             var palette = document.getElementById('navigator-toolbox').palette;
             palette.appendChild(toolbarButton);
@@ -251,7 +251,7 @@ function installButton(ssleuthButton, firstRun, document) {
             }
         } else if (ui.currentLocation === ui.buttonLocation.URLBAR) {
             var urlbar = document.getElementById('urlbar');
-            urlbar.insertBefore(ssleuthButton,
+            urlbar.insertBefore(sslrankButton,
                 document.getElementById('identity-box'));
         } else {
             log.error('currentLocation undefined! ');
@@ -269,7 +269,7 @@ function createButton(win) {
 
         if (ui.currentLocation == ui.buttonLocation.TOOLBAR) {
             button = create(doc, 'toolbarbutton', {
-                id: 'ssleuth-tb-button',
+                id: 'sslrank-tb-button',
                 removable: 'true',
                 class: 'toolbarbutton-1 chromeclass-toolbar-additional',
                 type: '',
@@ -281,19 +281,19 @@ function createButton(win) {
 
         } else if (ui.currentLocation == ui.buttonLocation.URLBAR) {
             button = create(doc, 'box', {
-                id: 'ssleuth-box-urlbar',
+                id: 'sslrank-box-urlbar',
                 role: 'button',
                 align: 'center',
                 width: '40'
             });
             button.appendChild(create(doc, 'image', {
-                id: 'ssleuth-ub-img',
+                id: 'sslrank-ub-img',
                 rank: 'default'
             }));
             panelPosition = 'bottomcenter topleft';
         }
 
-        button.setAttribute('label', 'SSleuth');
+        button.setAttribute('label', 'SSLRank');
         // button.setAttribute('oncommand', 'null'); 
         button.addEventListener('click', function (event) {
             panelEvent(event, win);
@@ -306,12 +306,12 @@ function createButton(win) {
 
         if (ui.currentLocation == ui.buttonLocation.URLBAR) {
             button.appendChild(create(doc, 'description', {
-                'id': 'ssleuth-ub-rank',
-                'class': 'ssleuth-text-body-class'
+                'id': 'sslrank-ub-rank',
+                'class': 'sslrank-text-body-class'
             }));
             button.appendChild(create(doc, 'box', {
-                'id': 'ssleuth-ub-separator',
-                'class': 'ssleuth-text-body-class',
+                'id': 'sslrank-ub-separator',
+                'class': 'sslrank-text-body-class',
                 'hidden': true
             }));
         }
@@ -333,7 +333,7 @@ function removeButton(button) {
 function panelEvent(event, win) {
 
     if (event.type == 'click' && event.button == 2) {
-        /* ssleuth.openPreferences(); */
+        /* sslrank.openPreferences(); */
     } else {
         try {
             togglePanel(panel(win).element, win);
@@ -347,10 +347,10 @@ function setBoxHidden(protocol, show, win) {
     var doc = win.document;
     switch (protocol) {
     case 'http':
-        doc.getElementById('ssleuth-panel-box-http').hidden = show;
+        doc.getElementById('sslrank-panel-box-http').hidden = show;
         break;
     case 'https':
-        doc.getElementById('ssleuth-panel-vbox-https').hidden = show;
+        doc.getElementById('sslrank-panel-vbox-https').hidden = show;
         break;
     default:
     }
@@ -358,7 +358,7 @@ function setBoxHidden(protocol, show, win) {
 
 function showPanel(panel, show, win) {
     if (show) {
-        panel.openPopup(_ssleuthButton(win));
+        panel.openPopup(_sslrankButton(win));
         panelVisible(win);
     } else {
         panel.hidePopup();
@@ -388,22 +388,22 @@ function panelConnectionRank(rank, win) {
     // I don't see any easy CSS hacks
     // without having to autogenerate spans in html.
     for (var i = 1; i <= 10; i++) {
-        s[i] = doc.getElementById('ssleuth-img-cipher-rank-star-' + String(i));
-        s[i].className = 'ssleuth-star';
+        s[i] = doc.getElementById('sslrank-img-cipher-rank-star-' + String(i));
+        s[i].className = 'sslrank-star';
     }
 
     for (var i = 1; i <= 10; i++) {
         if (i <= rank) {
-            s[i].className = 'ssleuth-star-full';
+            s[i].className = 'sslrank-star-full';
             if (i == rank)
                 break;
         }
         if ((i < rank) && (i + 1 > rank)) {
-            s[i + 1].className = 'ssleuth-star-half';
+            s[i + 1].className = 'sslrank-star-half';
             break;
         }
     }
-    doc.getElementById('ssleuth-text-cipher-rank-numeric').textContent = (_fmt(rank) + '/10');
+    doc.getElementById('sslrank-text-cipher-rank-numeric').textContent = (_fmt(rank) + '/10');
 }
 
 function fillPanel(data, win, winId) {
@@ -424,11 +424,11 @@ function setButtonRank(connectionRank, proto, win) {
     var doc = win.document;
     var buttonRank = getRatingClass(connectionRank);
 
-    _ssleuthBtnImg(win).setAttribute('rank', buttonRank);
+    _sslrankBtnImg(win).setAttribute('rank', buttonRank);
 
     if (ui.currentLocation == ui.buttonLocation.URLBAR) {
-        var ubRank = doc.getElementById('ssleuth-ub-rank');
-        var ubSeparator = doc.getElementById('ssleuth-ub-separator');
+        var ubRank = doc.getElementById('sslrank-ub-rank');
+        var ubSeparator = doc.getElementById('sslrank-ub-separator');
 
         ubRank.setAttribute('rank', buttonRank);
 
@@ -440,17 +440,17 @@ function setButtonRank(connectionRank, proto, win) {
 
         ubSeparator.hidden = true;
         if (ui.prefs['ui.notifier.colorize']) {
-            _ssleuthButton(win).setAttribute('rank', buttonRank);
+            _sslrankButton(win).setAttribute('rank', buttonRank);
         } else {
             ubSeparator.hidden = false;
             ubSeparator.setAttribute('rank', buttonRank);
-            _ssleuthButton(win).setAttribute('rank', 'blank');
+            _sslrankButton(win).setAttribute('rank', 'blank');
 
         }
     }
 
     // URL bar background gradient
-    doc.getElementById('urlbar').setAttribute('_ssleuthrank', (ui.prefs['ui.urlbar.colorize'] ? buttonRank : 'default'));
+    doc.getElementById('urlbar').setAttribute('_sslrankrank', (ui.prefs['ui.urlbar.colorize'] ? buttonRank : 'default'));
 }
 
 function showCipherDetails(cipherSuite, win) {
@@ -465,50 +465,50 @@ function showCipherDetails(cipherSuite, win) {
         marginCipherStatus = 'med';
     }
 
-    doc.getElementById('ssleuth-img-cipher-rank')
+    doc.getElementById('sslrank-img-cipher-rank')
         .setAttribute('status', marginCipherStatus);
 
-    doc.getElementById('ssleuth-text-cipher-suite').textContent =
+    doc.getElementById('sslrank-text-cipher-suite').textContent =
         (cipherSuite.name);
 
     var rating = Number(cipherSuite.rank * rp.cipherSuite / 10).toFixed(1);
-    doc.getElementById('ssleuth-cipher-suite-rating').textContent =
+    doc.getElementById('sslrank-cipher-suite-rating').textContent =
         (_fmt(rating) + '/' + _fmt(rp.cipherSuite));
 
-    doc.getElementById('ssleuth-text-cipher-suite-kxchange').textContent =
+    doc.getElementById('sslrank-text-cipher-suite-kxchange').textContent =
         (cipherSuite.keyExchange.ui + '.');
-    doc.getElementById('ssleuth-text-cipher-suite-kxchange-notes').textContent =
+    doc.getElementById('sslrank-text-cipher-suite-kxchange-notes').textContent =
         utils.getText(cipherSuite.keyExchange.notes);
 
-    doc.getElementById('ssleuth-text-cipher-suite-auth').textContent =
+    doc.getElementById('sslrank-text-cipher-suite-auth').textContent =
         (cipherSuite.authentication.ui + '. ');
-    doc.getElementById('ssleuth-text-cipher-suite-auth-notes').textContent =
+    doc.getElementById('sslrank-text-cipher-suite-auth-notes').textContent =
         utils.getText(cipherSuite.authentication.notes);
 
-    doc.getElementById('ssleuth-text-cipher-suite-bulkcipher').textContent =
+    doc.getElementById('sslrank-text-cipher-suite-bulkcipher').textContent =
         (cipherSuite.bulkCipher.ui + ' ' + cipherSuite.cipherKeyLen +
             ' ' + utils.getText('general.bits') + '.');
-    doc.getElementById('ssleuth-text-cipher-suite-bulkcipher-notes').textContent =
+    doc.getElementById('sslrank-text-cipher-suite-bulkcipher-notes').textContent =
         utils.getText(cipherSuite.bulkCipher.notes);
-    doc.getElementById('ssleuth-text-cipher-suite-hmac').textContent =
+    doc.getElementById('sslrank-text-cipher-suite-hmac').textContent =
         (cipherSuite.HMAC.ui + '. ');
-    doc.getElementById('ssleuth-text-cipher-suite-hmac-notes').textContent =
+    doc.getElementById('sslrank-text-cipher-suite-hmac-notes').textContent =
         utils.getText(cipherSuite.HMAC.notes);
 
     const panelInfo = ui.prefs['panel.info'];
-    doc.getElementById('ssleuth-text-authentication').hidden = !(panelInfo.authAlg);
-    doc.getElementById('ssleuth-text-bulk-cipher').hidden = !(panelInfo.bulkCipher);
-    doc.getElementById('ssleuth-text-hmac').hidden = !(panelInfo.HMAC);
-    doc.getElementById('ssleuth-text-key-exchange').hidden = !(panelInfo.keyExchange);
+    doc.getElementById('sslrank-text-authentication').hidden = !(panelInfo.authAlg);
+    doc.getElementById('sslrank-text-bulk-cipher').hidden = !(panelInfo.bulkCipher);
+    doc.getElementById('sslrank-text-hmac').hidden = !(panelInfo.HMAC);
+    doc.getElementById('sslrank-text-key-exchange').hidden = !(panelInfo.keyExchange);
 }
 
 function showPFS(pfs, win) {
     var doc = win.document;
     const rp = ui.prefs['rating.params'];
 
-    const pfsImg = doc.getElementById('ssleuth-img-p-f-secrecy');
-    const pfsTxt = doc.getElementById('ssleuth-text-p-f-secrecy');
-    const pfsRating = doc.getElementById('ssleuth-p-f-secrecy-rating');
+    const pfsImg = doc.getElementById('sslrank-img-p-f-secrecy');
+    const pfsTxt = doc.getElementById('sslrank-text-p-f-secrecy');
+    const pfsRating = doc.getElementById('sslrank-p-f-secrecy-rating');
 
     var rating = Number(pfs * rp.pfs).toFixed(1);
     pfsRating.textContent = _fmt(rating) + '/' + _fmt(rp.pfs);
@@ -526,11 +526,11 @@ function showFFState(state, win) {
     var doc = win.document;
     const rp = ui.prefs['rating.params'];
 
-    doc.getElementById('ssleuth-img-ff-connection-status').setAttribute('state', state);
-    doc.getElementById('ssleuth-text-ff-connection-status').textContent =
+    doc.getElementById('sslrank-img-ff-connection-status').setAttribute('state', state);
+    doc.getElementById('sslrank-text-ff-connection-status').textContent =
         utils.getText('connectionstatus.text.' + state.toLowerCase());
-    const statusRating = doc.getElementById('ssleuth-ff-connection-status-rating');
-    var brokenText = doc.getElementById('ssleuth-text-ff-connection-status-broken');
+    const statusRating = doc.getElementById('sslrank-ff-connection-status-rating');
+    var brokenText = doc.getElementById('sslrank-text-ff-connection-status-broken');
 
     var rating = Number(((state == 'Secure') ? 1 : 0) * rp.ffStatus).toFixed(1);
     statusRating.textContent = _fmt(rating) + '/' + _fmt(rp.ffStatus);
@@ -549,10 +549,10 @@ function showCertDetails(cert, domMismatch, ev, win) {
     const rp = ui.prefs['rating.params'];
     const panelInfo = ui.prefs['panel.info'];
 
-    doc.getElementById('ssleuth-text-cert-common-name').textContent = svCert.commonName;
-    var certRating = doc.getElementById('ssleuth-cert-status-rating');
-    var evRating = doc.getElementById('ssleuth-cert-ev-rating');
-    var elemEV = doc.getElementById('ssleuth-text-cert-extended-validation');
+    doc.getElementById('sslrank-text-cert-common-name').textContent = svCert.commonName;
+    var certRating = doc.getElementById('sslrank-cert-status-rating');
+    var evRating = doc.getElementById('sslrank-cert-ev-rating');
+    var elemEV = doc.getElementById('sslrank-text-cert-extended-validation');
     if (ev) {
         elemEV.textContent = utils.getText('general.yes');
         elemEV.setAttribute('ev', 'Yes');
@@ -565,17 +565,17 @@ function showCertDetails(cert, domMismatch, ev, win) {
     evRating.textContent = _fmt(rating) + '/' + _fmt(rp.evCert);
 
     for (var [id, text] in Iterator({
-            'ssleuth-text-cert-org': svCert.organization,
-            'ssleuth-text-cert-org-unit': svCert.organizationalUnit,
-            'ssleuth-text-cert-issuer-org': svCert.issuerOrganization,
-            'ssleuth-text-cert-issuer-org-unit': svCert.issuerOrganizationUnit
+            'sslrank-text-cert-org': svCert.organization,
+            'sslrank-text-cert-org-unit': svCert.organizationalUnit,
+            'sslrank-text-cert-issuer-org': svCert.issuerOrganization,
+            'sslrank-text-cert-issuer-org-unit': svCert.issuerOrganizationUnit
         })) {
         var elem = doc.getElementById(id);
         elem.textContent = text;
         elem.hidden = (text == '');
     }
 
-    var certValidity = doc.getElementById('ssleuth-text-cert-validity');
+    var certValidity = doc.getElementById('sslrank-text-cert-validity');
     certValidity.setAttribute('valid', cert.isValid.toString());
 
     var notBefore = new Date(validity.notBefore / 1000),
@@ -587,37 +587,37 @@ function showCertDetails(cert, domMismatch, ev, win) {
         certValidity.textContent = notBefore.toLocaleDateString() + ' -- ' + notAfter.toLocaleDateString();
     }
 
-    doc.getElementById('ssleuth-text-cert-domain-mismatch').hidden = !domMismatch;
+    doc.getElementById('sslrank-text-cert-domain-mismatch').hidden = !domMismatch;
 
     var rating = (Number(cert.isValid && !domMismatch) * rp.certStatus).toFixed(1);
     certRating.textContent = _fmt(rating) + '/' + _fmt(rp.certStatus);
 
     if (cert.isValid && !domMismatch) {
-        doc.getElementById('ssleuth-img-cert-state').setAttribute('state', 'good');
+        doc.getElementById('sslrank-img-cert-state').setAttribute('state', 'good');
     } else {
-        doc.getElementById('ssleuth-img-cert-state').setAttribute('state', 'bad');
+        doc.getElementById('sslrank-img-cert-state').setAttribute('state', 'bad');
     }
 
-    doc.getElementById('ssleuth-text-cert-pub-key')
+    doc.getElementById('sslrank-text-cert-pub-key')
         .textContent = (cert.pubKeySize + ' ' + utils.getText('general.bits') + ' ' + cert.pubKeyAlg);
-    doc.getElementById('ssleuth-text-cert-pub-key')
+    doc.getElementById('sslrank-text-cert-pub-key')
         .setAttribute('secure', cert.pubKeyMinSecure.toString());
 
-    doc.getElementById('ssleuth-text-cert-sigalg')
+    doc.getElementById('sslrank-text-cert-sigalg')
         .textContent = cert.signatureAlg.hmac + '/' + cert.signatureAlg.enc;
     rating = Number(cert.signatureAlg.rating * rp.signature / 10).toFixed(1);
-    doc.getElementById('ssleuth-cert-sigalg-rating')
+    doc.getElementById('sslrank-cert-sigalg-rating')
         .textContent = _fmt(rating) + '/' + _fmt(rp.signature);
 
-    doc.getElementById('ssleuth-text-cert-fingerprint-1')
+    doc.getElementById('sslrank-text-cert-fingerprint-1')
         .textContent = svCert.sha256Fingerprint.substring(0, 33);
-    doc.getElementById('ssleuth-text-cert-fingerprint-2')
+    doc.getElementById('sslrank-text-cert-fingerprint-2')
         .textContent = svCert.sha256Fingerprint.substring(33, 66);
-    doc.getElementById('ssleuth-text-cert-fingerprint-3')
+    doc.getElementById('sslrank-text-cert-fingerprint-3')
         .textContent = svCert.sha256Fingerprint.substring(66);
 
-    doc.getElementById('ssleuth-text-cert-validity-box').hidden = !(panelInfo.certValidity);
-    doc.getElementById('ssleuth-text-cert-fingerprint-box').hidden = !(panelInfo.certFingerprint);
+    doc.getElementById('sslrank-text-cert-validity-box').hidden = !(panelInfo.certValidity);
+    doc.getElementById('sslrank-text-cert-fingerprint-box').hidden = !(panelInfo.certFingerprint);
 }
 
 function showTLSVersion(win, tab) {
@@ -630,16 +630,16 @@ function showTLSVersion(win, tab) {
     if (tlsIndex == '')
         tlsIndex = 'ff_cache';
 
-    doc.getElementById('ssleuth-text-tls-version').textContent =
+    doc.getElementById('sslrank-text-tls-version').textContent =
         tlsVersions[tlsIndex].ui;
 
-    doc.getElementById('ssleuth-img-tls-version').setAttribute('state',
+    doc.getElementById('sslrank-img-tls-version').setAttribute('state',
         tlsVersions[tlsIndex].state);
 }
 
 function showCrossDomainRating(win, tab) {
     var doc = win.document;
-    doc.getElementById('ssleuth-domains-rating-box').hidden = false;
+    doc.getElementById('sslrank-domains-rating-box').hidden = false;
 
     var domainsRating = '...';
 
@@ -650,14 +650,14 @@ function showCrossDomainRating(win, tab) {
         respCache.domainsRating != -1)
         domainsRating = respCache.domainsRating;
 
-    doc.getElementById('ssleuth-text-domains-rating-numeric').textContent =
+    doc.getElementById('sslrank-text-domains-rating-numeric').textContent =
         ' domains : ' + _fmt(domainsRating);
 
     var ratingClass = getRatingClass(domainsRating);
     if (respCache &&
         respCache.mixedContent)
         ratingClass = 'low';
-    doc.getElementById('ssleuth-img-domains-rating').setAttribute('rank', ratingClass);
+    doc.getElementById('sslrank-img-domains-rating').setAttribute('rank', ratingClass);
 }
 
 function createKeyShortcut(win) {
@@ -672,7 +672,7 @@ function createKeyShortcut(win) {
     // something, the key events won't fire! I already have an 
     // event listener for 'command'.
     var key = create(doc, 'key', {
-        id: 'ssleuth-panel-keybinding',
+        id: 'sslrank-panel-keybinding',
         oncommand: 'void(0);',
         key: keys.splice(len - 1, 1),
         modifiers: keys.join(' ')
@@ -685,7 +685,7 @@ function createKeyShortcut(win) {
 }
 
 function deleteKeyShortcut(doc) {
-    var keyset = doc.getElementById('ssleuth-panel-keybinding').parentElement;
+    var keyset = doc.getElementById('sslrank-panel-keybinding').parentElement;
     keyset.parentElement.removeChild(keyset);
 }
 
@@ -723,7 +723,7 @@ function forEachOpenWindow(todo) {
 
 function initDomainsPanel(win) {
     var doc = win.document,
-        domainsTab = doc.getElementById('ssleuth-paneltab-domains');
+        domainsTab = doc.getElementById('sslrank-paneltab-domains');
 
     domainsTab.addEventListener('click', function () {
         loadDomainsTab(win, null);
@@ -734,9 +734,9 @@ function initCiphersPanel(win) {
     var doc = win.document;
 
     loadCiphersTab(win);
-    var btn = doc.getElementById('ssleuth-paneltab-ciphers-btn-reset');
+    var btn = doc.getElementById('sslrank-paneltab-ciphers-btn-reset');
     btn.addEventListener('click', resetAllLists, false);
-    btn = doc.getElementById('ssleuth-paneltab-ciphers-btn-custom');
+    btn = doc.getElementById('sslrank-paneltab-ciphers-btn-custom');
     btn.addEventListener('click', function (e) {
         preferences.openTab(2);
         togglePanel(panel(win).element, win);
@@ -745,13 +745,13 @@ function initCiphersPanel(win) {
 
 function initPanelPreferences(win) {
     var doc = win.document;
-    var panelPref = doc.getElementById('ssleuth-img-panel-pref-icon');
+    var panelPref = doc.getElementById('sslrank-img-panel-pref-icon');
     panelPref.addEventListener('click', function () {
         preferences.openTab(0);
         togglePanel(panel(win).element, win);
     }, false);
 
-    panelPref = doc.getElementById('ssleuth-img-panel-clipboard');
+    panelPref = doc.getElementById('sslrank-img-panel-clipboard');
     panelPref.addEventListener('click', function () {
         copyToClipboard(win);
     }, false);
@@ -775,19 +775,19 @@ function loadDomainsTab(win, winId) {
             if (!respCache) return;
 
             let reqs = respCache['reqs'];
-            let rb = doc.getElementById('ssleuth-paneltab-domains-list');
+            let rb = doc.getElementById('sslrank-paneltab-domains-list');
 
             // TODO : Set maxheight to that of the main vbox
-            // rb.maxheight = doc.getElementById('ssleuth-panel-main-vbox').height;
+            // rb.maxheight = doc.getElementById('sslrank-panel-main-vbox').height;
             // TODO : 1) Problem navigate http page/chrome page back and forth
             //        - Chops off main tab 
             //        2) Navigate https page to http, main tab is big, empty space.
-            doc.getElementById('ssleuth-panel-domains-vbox')
-                .setAttribute('maxheight', doc.getElementById('ssleuth-panel-main-vbox').scrollHeight);
+            doc.getElementById('sslrank-panel-domains-vbox')
+                .setAttribute('maxheight', doc.getElementById('sslrank-panel-main-vbox').scrollHeight);
 
             for (var [domain, stats] in Iterator(reqs)) {
                 let ri = rb.appendChild(create(doc, 'richlistitem', {
-                    class: 'ssleuth-paneltab-domains-item'
+                    class: 'sslrank-paneltab-domains-item'
                 }));
                 let vb = ri.appendChild(create(doc, 'vbox', {})); {
                     // Domain name + requests hbox
@@ -876,7 +876,7 @@ function loadDomainsTab(win, winId) {
 
 
 function resetDomains(doc) {
-    let rb = doc.getElementById('ssleuth-paneltab-domains-list');
+    let rb = doc.getElementById('sslrank-paneltab-domains-list');
 
     while (rb.hasChildNodes()) {
         rb.removeChild(rb.firstChild);
@@ -886,7 +886,7 @@ function resetDomains(doc) {
 function loadCiphersTab(win) {
     try {
         var doc = win.document;
-        var rows = doc.getElementById('ssleuth-paneltab-ciphers-rows');
+        var rows = doc.getElementById('sslrank-paneltab-ciphers-rows');
 
         // Reset anything before.
         while (rows.hasChildNodes()) {
@@ -906,7 +906,7 @@ function loadCiphersTab(win) {
 
             var m_list = row.appendChild(create(doc, 'menulist', {
                 // Fix Toolbar button rank image bug
-                class: 'ssleuth-panel-cipher-menulist'
+                class: 'sslrank-panel-cipher-menulist'
             }));
 
             var m_popup = m_list.appendChild(doc.createElement('menupopup'));
@@ -998,49 +998,49 @@ function copyToClipboard(win) {
             var scheme = msg.scheme;
 
             var httpElements = [
-                ['ssleuth-text-http-1', 'textContent', '\n'],
-                ['ssleuth-text-http-2', 'textContent', '\n'],
-                ['ssleuth-panel-https-link', 'href', '\n'],
-                ['ssleuth-text-http-note', 'textContent', '']
+                ['sslrank-text-http-1', 'textContent', '\n'],
+                ['sslrank-text-http-2', 'textContent', '\n'],
+                ['sslrank-panel-https-link', 'href', '\n'],
+                ['sslrank-text-http-note', 'textContent', '']
             ];
             var httpsElements = [
-                ['ssleuth-text-cipher-suite-label', 'value', '\n'],
-                ['ssleuth-text-cipher-suite', 'textContent', '\n\t'],
-                ['ssleuth-text-key-exchange-label', 'value', ' '],
-                ['ssleuth-text-cipher-suite-kxchange', 'textContent', '\n\t'],
-                ['ssleuth-text-authentication-label', 'value', ' '],
-                ['ssleuth-text-cipher-suite-auth', 'textContent', '\n\t'],
-                ['ssleuth-text-bulk-cipher-label', 'value', ' '],
-                ['ssleuth-text-cipher-suite-bulkcipher', 'textContent', '\n\t'],
-                ['ssleuth-text-hmac-label', 'value', ' '],
-                ['ssleuth-text-cipher-suite-hmac', 'textContent', '\n'],
-                ['ssleuth-text-p-f-secrecy-label', 'value', ' '],
-                ['ssleuth-text-p-f-secrecy', 'textContent', '\n'],
-                ['ssleuth-text-tls-version-label', 'value', ' '],
-                ['ssleuth-text-tls-version', 'textContent', '\n'],
-                ['ssleuth-text-conn-status', 'value', ' '],
-                ['ssleuth-text-ff-connection-status', 'textContent', '\n'],
-                ['ssleuth-text-cert-label', 'value', '\n\t'],
-                ['ssleuth-text-cert-ev', 'value', ' '],
-                ['ssleuth-text-cert-extended-validation', 'textContent', '\n\t'],
-                ['ssleuth-text-cert-sigalg-text', 'value', ' '],
-                ['ssleuth-text-cert-sigalg', 'textContent', '\n\t'],
-                ['ssleuth-text-cert-pub-key-text', 'value', ' '],
-                ['ssleuth-text-cert-pub-key', 'textContent', '\n\t'],
-                ['ssleuth-text-cert-cn-label', 'value', ' '],
-                ['ssleuth-text-cert-common-name', 'textContent', '\n\t'],
-                ['ssleuth-text-cert-issuedto', 'value', ' '],
-                ['ssleuth-text-cert-org', 'textContent', ' '],
-                ['ssleuth-text-cert-org-unit', 'textContent', '\n\t'],
-                ['ssleuth-text-cert-issuedby', 'value', ' '],
-                ['ssleuth-text-cert-issuer-org', 'textContent', ' '],
-                ['ssleuth-text-cert-issuer-org-unit', 'textContent', '\n\t'],
-                ['ssleuth-text-cert-validity-text', 'value', ' '],
-                ['ssleuth-text-cert-validity', 'textContent', '\n\t'],
-                ['ssleuth-text-cert-fingerprint-label', 'value', ' '],
-                ['ssleuth-text-cert-fingerprint-1', 'textContent', ''],
-                ['ssleuth-text-cert-fingerprint-2', 'textContent', ''],
-                ['ssleuth-text-cert-fingerprint-3', 'textContent', '']
+                ['sslrank-text-cipher-suite-label', 'value', '\n'],
+                ['sslrank-text-cipher-suite', 'textContent', '\n\t'],
+                ['sslrank-text-key-exchange-label', 'value', ' '],
+                ['sslrank-text-cipher-suite-kxchange', 'textContent', '\n\t'],
+                ['sslrank-text-authentication-label', 'value', ' '],
+                ['sslrank-text-cipher-suite-auth', 'textContent', '\n\t'],
+                ['sslrank-text-bulk-cipher-label', 'value', ' '],
+                ['sslrank-text-cipher-suite-bulkcipher', 'textContent', '\n\t'],
+                ['sslrank-text-hmac-label', 'value', ' '],
+                ['sslrank-text-cipher-suite-hmac', 'textContent', '\n'],
+                ['sslrank-text-p-f-secrecy-label', 'value', ' '],
+                ['sslrank-text-p-f-secrecy', 'textContent', '\n'],
+                ['sslrank-text-tls-version-label', 'value', ' '],
+                ['sslrank-text-tls-version', 'textContent', '\n'],
+                ['sslrank-text-conn-status', 'value', ' '],
+                ['sslrank-text-ff-connection-status', 'textContent', '\n'],
+                ['sslrank-text-cert-label', 'value', '\n\t'],
+                ['sslrank-text-cert-ev', 'value', ' '],
+                ['sslrank-text-cert-extended-validation', 'textContent', '\n\t'],
+                ['sslrank-text-cert-sigalg-text', 'value', ' '],
+                ['sslrank-text-cert-sigalg', 'textContent', '\n\t'],
+                ['sslrank-text-cert-pub-key-text', 'value', ' '],
+                ['sslrank-text-cert-pub-key', 'textContent', '\n\t'],
+                ['sslrank-text-cert-cn-label', 'value', ' '],
+                ['sslrank-text-cert-common-name', 'textContent', '\n\t'],
+                ['sslrank-text-cert-issuedto', 'value', ' '],
+                ['sslrank-text-cert-org', 'textContent', ' '],
+                ['sslrank-text-cert-org-unit', 'textContent', '\n\t'],
+                ['sslrank-text-cert-issuedby', 'value', ' '],
+                ['sslrank-text-cert-issuer-org', 'textContent', ' '],
+                ['sslrank-text-cert-issuer-org-unit', 'textContent', '\n\t'],
+                ['sslrank-text-cert-validity-text', 'value', ' '],
+                ['sslrank-text-cert-validity', 'textContent', '\n\t'],
+                ['sslrank-text-cert-fingerprint-label', 'value', ' '],
+                ['sslrank-text-cert-fingerprint-1', 'textContent', ''],
+                ['sslrank-text-cert-fingerprint-2', 'textContent', ''],
+                ['sslrank-text-cert-fingerprint-3', 'textContent', '']
 
             ];
 

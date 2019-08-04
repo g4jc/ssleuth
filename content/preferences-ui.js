@@ -3,7 +3,7 @@
     Components.utils.import('resource://gre/modules/Services.jsm');
 
     var log = (function () {
-        let log = Log.repository.getLogger('[SSleuth-Preferences] ');
+        let log = Log.repository.getLogger('[SSLRank-Preferences] ');
         log.level = Log.Level.Error;
         log.addAppender(new Log.DumpAppender(new Log.BasicFormatter()));
 
@@ -13,24 +13,24 @@
     // cx = connection 
     // cs = cipher suite 
     var cxRatingIds = [
-        'ssleuth-pref-cipher-suite-weight',
-        'ssleuth-pref-pfs-weight',
-        'ssleuth-pref-ev-weight',
-        'ssleuth-pref-ffstatus-weight',
-        'ssleuth-pref-certstate-weight',
-        'ssleuth-pref-signature-weight'
+        'sslrank-pref-cipher-suite-weight',
+        'sslrank-pref-pfs-weight',
+        'sslrank-pref-ev-weight',
+        'sslrank-pref-ffstatus-weight',
+        'sslrank-pref-certstate-weight',
+        'sslrank-pref-signature-weight'
     ];
 
     var csRatingIds = [
-        'ssleuth-pref-cs-kx-weight',
-        'ssleuth-pref-cs-cipher-weight',
-        'ssleuth-pref-cs-hmac-weight'
+        'sslrank-pref-cs-kx-weight',
+        'sslrank-pref-cs-cipher-weight',
+        'sslrank-pref-cs-hmac-weight'
     ];
 
     const Cc = Components.classes,
         Ci = Components.interfaces,
         prefs = Cc['@mozilla.org/preferences-service;1'].getService(Ci.nsIPrefBranch),
-        BRANCH = 'extensions.ssleuth.',
+        BRANCH = 'extensions.sslrank.',
         BRANCHTLS = 'security.ssl3.';
 
     const PREF_NOTIF_LOC = BRANCH + 'notifier.location',
@@ -60,48 +60,48 @@
             initRatings();
             initMngList();
             addListeners();
-            // document.getElementById('ssleuth-pref-categories')
-            //    .selectedIndex = Application.storage.get('ssleuth.prefwindow.tabindex', 0);
+            // document.getElementById('sslrank-pref-categories')
+            //    .selectedIndex = Application.storage.get('sslrank.prefwindow.tabindex', 0);
         };
 
         var selectIndex = function (e) {
-            document.getElementById('ssleuth-pref-categories').selectedIndex = e.detail;
+            document.getElementById('sslrank-pref-categories').selectedIndex = e.detail;
         };
 
         var initUIOptions = function () {
-            document.getElementById('ssleuth-pref-notifier-location').value = prefs.getIntPref(PREF_NOTIF_LOC);
-            document.getElementById('ssleuth-pref-panel-fontsize').value = prefs.getIntPref(PREF_PANEL_FONT);
+            document.getElementById('sslrank-pref-notifier-location').value = prefs.getIntPref(PREF_NOTIF_LOC);
+            document.getElementById('sslrank-pref-panel-fontsize').value = prefs.getIntPref(PREF_PANEL_FONT);
 
             panelInfo = JSON.parse(prefs.getCharPref(PREF_PANEL_INFO));
             for (var [id, val] in Iterator({
-                    'ssleuth-pref-show-cs-hmac': panelInfo.HMAC,
-                    'ssleuth-pref-show-cs-bulk-cipher': panelInfo.bulkCipher,
-                    'ssleuth-pref-show-cs-key-exchange': panelInfo.keyExchange,
-                    'ssleuth-pref-show-cs-authentication': panelInfo.authAlg,
-                    'ssleuth-pref-show-cert-validity': panelInfo.certValidity,
-                    'ssleuth-pref-show-cert-validity-time': panelInfo.validityTime,
-                    'ssleuth-pref-show-cert-fingerprint': panelInfo.certFingerprint,
+                    'sslrank-pref-show-cs-hmac': panelInfo.HMAC,
+                    'sslrank-pref-show-cs-bulk-cipher': panelInfo.bulkCipher,
+                    'sslrank-pref-show-cs-key-exchange': panelInfo.keyExchange,
+                    'sslrank-pref-show-cs-authentication': panelInfo.authAlg,
+                    'sslrank-pref-show-cert-validity': panelInfo.certValidity,
+                    'sslrank-pref-show-cert-validity-time': panelInfo.validityTime,
+                    'sslrank-pref-show-cert-fingerprint': panelInfo.certFingerprint,
                 })) {
                 document.getElementById(id).checked = val;
             }
 
-            document.getElementById('ssleuth-pref-show-urlbar-gradient').checked = prefs.getBoolPref(PREF_URL_COLORIZE);
-            document.getElementById('ssleuth-pref-show-notifier-gradient').checked = prefs.getBoolPref(PREF_NOTIFIER_COLORIZE);
+            document.getElementById('sslrank-pref-show-urlbar-gradient').checked = prefs.getBoolPref(PREF_URL_COLORIZE);
+            document.getElementById('sslrank-pref-show-notifier-gradient').checked = prefs.getBoolPref(PREF_NOTIFIER_COLORIZE);
         };
 
         var initRatings = function () {
             cxRating = JSON.parse(prefs.getCharPref(PREF_CX_RATING));
             csRating = JSON.parse(prefs.getCharPref(PREF_CS_RATING));
             for (var [id, val] in Iterator({
-                    'ssleuth-pref-cipher-suite-weight': cxRating.cipherSuite,
-                    'ssleuth-pref-pfs-weight': cxRating.pfs,
-                    'ssleuth-pref-ev-weight': cxRating.evCert,
-                    'ssleuth-pref-ffstatus-weight': cxRating.ffStatus,
-                    'ssleuth-pref-certstate-weight': cxRating.certStatus,
-                    'ssleuth-pref-signature-weight': cxRating.signature,
-                    'ssleuth-pref-cs-kx-weight': csRating.keyExchange,
-                    'ssleuth-pref-cs-cipher-weight': csRating.bulkCipher,
-                    'ssleuth-pref-cs-hmac-weight': csRating.hmac
+                    'sslrank-pref-cipher-suite-weight': cxRating.cipherSuite,
+                    'sslrank-pref-pfs-weight': cxRating.pfs,
+                    'sslrank-pref-ev-weight': cxRating.evCert,
+                    'sslrank-pref-ffstatus-weight': cxRating.ffStatus,
+                    'sslrank-pref-certstate-weight': cxRating.certStatus,
+                    'sslrank-pref-signature-weight': cxRating.signature,
+                    'sslrank-pref-cs-kx-weight': csRating.keyExchange,
+                    'sslrank-pref-cs-cipher-weight': csRating.bulkCipher,
+                    'sslrank-pref-cs-hmac-weight': csRating.hmac
                 })) {
                 document.getElementById(id).value = val;
             }
@@ -111,8 +111,8 @@
         };
 
         var initMngList = function () {
-            var csBox = document.getElementById('ssleuth-pref-mng-cs-entrybox');
-            var csDeck = document.getElementById('ssleuth-pref-mng-cs-deck');
+            var csBox = document.getElementById('sslrank-pref-mng-cs-entrybox');
+            var csDeck = document.getElementById('sslrank-pref-mng-cs-deck');
 
             // Clear any existing elements - to help with re-init after edits
             // For items list, keep the header and remove listitems.
@@ -178,71 +178,71 @@
                     .addEventListener('change', csRatingChanged, false);
             }
             for (var [id, func] in Iterator({
-                    'ssleuth-pref-notifier-location': notifLocChange,
-                    'ssleuth-pref-panel-fontsize': panelFontChange,
-                    'ssleuth-pref-cx-ratings-apply': cxRatingApply,
-                    'ssleuth-pref-cx-ratings-reset': cxRatingReset,
-                    'ssleuth-pref-cs-ratings-apply': csRatingApply,
-                    'ssleuth-pref-cs-ratings-reset': csRatingReset,
-                    'ssleuth-pref-mng-cs-entry-new': csMngEntryNew,
-                    'ssleuth-pref-mng-cs-entry-edit': csMngEntryEdit,
-                    'ssleuth-pref-mng-cs-entry-remove': csMngEntryRemove,
-                    'ssleuth-pref-mng-cs-edit-apply': csMngEntryEditApply,
-                    'ssleuth-pref-mng-cs-edit-cancel': csMngEntryEditCancel,
-                    'ssleuth-pref-mng-cs-entry-restore-default': csMngEntryRestoreDefault,
-                    'ssleuth-pref-cs-reset-all-cs': csResetAll,
-                    'ssleuth-pref-show-cs-hmac': panelInfoCheck,
-                    'ssleuth-pref-show-cs-bulk-cipher': panelInfoCheck,
-                    'ssleuth-pref-show-cs-key-exchange': panelInfoCheck,
-                    'ssleuth-pref-show-cs-authentication': panelInfoCheck,
-                    'ssleuth-pref-show-cert-validity': panelInfoCheck,
-                    'ssleuth-pref-show-cert-validity-time': panelInfoCheck,
-                    'ssleuth-pref-show-cert-fingerprint': panelInfoCheck,
-                    'ssleuth-pref-show-panel-info-reset': panelInfoReset,
-                    'ssleuth-pref-show-urlbar-gradient': urlbarColorize,
-                    'ssleuth-pref-show-notifier-gradient': notifierColorize,
+                    'sslrank-pref-notifier-location': notifLocChange,
+                    'sslrank-pref-panel-fontsize': panelFontChange,
+                    'sslrank-pref-cx-ratings-apply': cxRatingApply,
+                    'sslrank-pref-cx-ratings-reset': cxRatingReset,
+                    'sslrank-pref-cs-ratings-apply': csRatingApply,
+                    'sslrank-pref-cs-ratings-reset': csRatingReset,
+                    'sslrank-pref-mng-cs-entry-new': csMngEntryNew,
+                    'sslrank-pref-mng-cs-entry-edit': csMngEntryEdit,
+                    'sslrank-pref-mng-cs-entry-remove': csMngEntryRemove,
+                    'sslrank-pref-mng-cs-edit-apply': csMngEntryEditApply,
+                    'sslrank-pref-mng-cs-edit-cancel': csMngEntryEditCancel,
+                    'sslrank-pref-mng-cs-entry-restore-default': csMngEntryRestoreDefault,
+                    'sslrank-pref-cs-reset-all-cs': csResetAll,
+                    'sslrank-pref-show-cs-hmac': panelInfoCheck,
+                    'sslrank-pref-show-cs-bulk-cipher': panelInfoCheck,
+                    'sslrank-pref-show-cs-key-exchange': panelInfoCheck,
+                    'sslrank-pref-show-cs-authentication': panelInfoCheck,
+                    'sslrank-pref-show-cert-validity': panelInfoCheck,
+                    'sslrank-pref-show-cert-validity-time': panelInfoCheck,
+                    'sslrank-pref-show-cert-fingerprint': panelInfoCheck,
+                    'sslrank-pref-show-panel-info-reset': panelInfoReset,
+                    'sslrank-pref-show-urlbar-gradient': urlbarColorize,
+                    'sslrank-pref-show-notifier-gradient': notifierColorize,
                 })) {
                 document.getElementById(id)
                     .addEventListener('command', func, false);
             }
-            document.getElementById('ssleuth-pref-mng-cs-entrybox')
+            document.getElementById('sslrank-pref-mng-cs-entrybox')
                 .addEventListener('select', csMngEntrySelect, false);
-            document.getElementById('ssleuth-pref-mng-cs-entrybox')
+            document.getElementById('sslrank-pref-mng-cs-entrybox')
                 .addEventListener('dblclick', csMngEntryEdit, false);
         };
 
         var notifLocChange = function () {
             prefs.setIntPref(PREF_NOTIF_LOC,
-                document.getElementById('ssleuth-pref-notifier-location').value);
+                document.getElementById('sslrank-pref-notifier-location').value);
         };
         var panelFontChange = function () {
             prefs.setIntPref(PREF_PANEL_FONT,
-                document.getElementById('ssleuth-pref-panel-fontsize').value);
+                document.getElementById('sslrank-pref-panel-fontsize').value);
         };
         var urlbarColorize = function () {
             prefs.setBoolPref(PREF_URL_COLORIZE,
-                document.getElementById('ssleuth-pref-show-urlbar-gradient').checked);
+                document.getElementById('sslrank-pref-show-urlbar-gradient').checked);
         };
         var notifierColorize = function () {
             prefs.setBoolPref(PREF_NOTIFIER_COLORIZE,
-                document.getElementById('ssleuth-pref-show-notifier-gradient').checked);
+                document.getElementById('sslrank-pref-show-notifier-gradient').checked);
         };
 
         var panelInfoCheck = function () {
             panelInfo.HMAC =
-                document.getElementById('ssleuth-pref-show-cs-hmac').checked;
+                document.getElementById('sslrank-pref-show-cs-hmac').checked;
             panelInfo.bulkCipher =
-                document.getElementById('ssleuth-pref-show-cs-bulk-cipher').checked;
+                document.getElementById('sslrank-pref-show-cs-bulk-cipher').checked;
             panelInfo.keyExchange =
-                document.getElementById('ssleuth-pref-show-cs-key-exchange').checked;
+                document.getElementById('sslrank-pref-show-cs-key-exchange').checked;
             panelInfo.authAlg =
-                document.getElementById('ssleuth-pref-show-cs-authentication').checked;
+                document.getElementById('sslrank-pref-show-cs-authentication').checked;
             panelInfo.certValidity =
-                document.getElementById('ssleuth-pref-show-cert-validity').checked;
+                document.getElementById('sslrank-pref-show-cert-validity').checked;
             panelInfo.validityTime =
-                document.getElementById('ssleuth-pref-show-cert-validity-time').checked;
+                document.getElementById('sslrank-pref-show-cert-validity-time').checked;
             panelInfo.certFingerprint =
-                document.getElementById('ssleuth-pref-show-cert-fingerprint').checked;
+                document.getElementById('sslrank-pref-show-cert-fingerprint').checked;
             prefs.setCharPref(PREF_PANEL_INFO, JSON.stringify(panelInfo));
         };
         var panelInfoReset = function () {
@@ -254,19 +254,19 @@
             for (var total = 0, i = 0; i < cxRatingIds.length; i++) {
                 total += Number(document.getElementById(cxRatingIds[i]).value);
             }
-            document.getElementById('ssleuth-pref-cx-rating-total').value = total;
+            document.getElementById('sslrank-pref-cx-rating-total').value = total;
         };
         var csRatingChanged = function () {
             var total = 0;
             for (i = 0; i < csRatingIds.length; i++) {
                 total += Number(document.getElementById(csRatingIds[i]).value);
             }
-            document.getElementById('ssleuth-pref-cs-rating-total').value = total;
+            document.getElementById('sslrank-pref-cs-rating-total').value = total;
         };
 
         var csMngEntryNew = function () {
-            var csBox = document.getElementById('ssleuth-pref-mng-cs-entrybox');
-            var csDeck = document.getElementById('ssleuth-pref-mng-cs-deck');
+            var csBox = document.getElementById('sslrank-pref-mng-cs-entrybox');
+            var csDeck = document.getElementById('sslrank-pref-mng-cs-deck');
 
             var item = document.createElement('richlistitem');
             var hbox = document.createElement('hbox');
@@ -298,8 +298,8 @@
         };
 
         var csMngEntryEdit = function () {
-            var csBox = document.getElementById('ssleuth-pref-mng-cs-entrybox');
-            var csDeck = document.getElementById('ssleuth-pref-mng-cs-deck');
+            var csBox = document.getElementById('sslrank-pref-mng-cs-entrybox');
+            var csDeck = document.getElementById('sslrank-pref-mng-cs-deck');
 
             var item = csBox.selectedItem;
             if (!item) {
@@ -345,7 +345,7 @@
 
             // Enable edit mode, and apply/cancel.  
             // Disable new/edit/remove/ buttons.
-            document.getElementById('ssleuth-pref-mng-cs-edit-buttons').hidden = false;
+            document.getElementById('sslrank-pref-mng-cs-edit-buttons').hidden = false;
 
             editMode = true;
             editItem = item;
@@ -354,7 +354,7 @@
 
             hideCsMngEntryButtons('true');
             // Disable double click event listener
-            document.getElementById('ssleuth-pref-mng-cs-entrybox').removeEventListener('dblclick', csMngEntryEdit);
+            document.getElementById('sslrank-pref-mng-cs-entrybox').removeEventListener('dblclick', csMngEntryEdit);
         };
 
         var csMngEntryEditApply = function () {
@@ -405,11 +405,11 @@
 
         var hideCsMngEntryButtons = function (flag) {
             for (var id of[
-                    'ssleuth-pref-mng-cs-entry-new',
-                    'ssleuth-pref-mng-cs-entry-edit',
-                    'ssleuth-pref-mng-cs-entry-remove',
-                    'ssleuth-pref-mng-cs-entry-restore-default',
-                    'ssleuth-pref-cs-reset-all-cs'
+                    'sslrank-pref-mng-cs-entry-new',
+                    'sslrank-pref-mng-cs-entry-edit',
+                    'sslrank-pref-mng-cs-entry-remove',
+                    'sslrank-pref-mng-cs-entry-restore-default',
+                    'sslrank-pref-cs-reset-all-cs'
                     ]) {
                 document.getElementById(id)
                     .setAttribute('disabled', flag);
@@ -421,15 +421,15 @@
             editItem = editListbox = editEntry = null;
 
             hideCsMngEntryButtons('false');
-            document.getElementById('ssleuth-pref-mng-cs-edit-buttons').hidden = true;
+            document.getElementById('sslrank-pref-mng-cs-edit-buttons').hidden = true;
             // Re-enable double click listener
-            document.getElementById('ssleuth-pref-mng-cs-entrybox').addEventListener('dblclick', csMngEntryEdit, false);
+            document.getElementById('sslrank-pref-mng-cs-entrybox').addEventListener('dblclick', csMngEntryEdit, false);
 
             initMngList();
         };
 
         var csMngEntryRemove = function () {
-            var csBox = document.getElementById('ssleuth-pref-mng-cs-entrybox');
+            var csBox = document.getElementById('sslrank-pref-mng-cs-entrybox');
 
             var item = csBox.selectedItem;
             if (!item) {
@@ -448,13 +448,13 @@
         };
 
         var csMngEntrySelect = function () {
-            var csBox = document.getElementById('ssleuth-pref-mng-cs-entrybox');
-            var csDeck = document.getElementById('ssleuth-pref-mng-cs-deck');
+            var csBox = document.getElementById('sslrank-pref-mng-cs-entrybox');
+            var csDeck = document.getElementById('sslrank-pref-mng-cs-deck');
             csDeck.selectedIndex = csBox.selectedIndex;
         };
 
         var csMngEntryRadioEvent = function () {
-            var csBox = document.getElementById('ssleuth-pref-mng-cs-entrybox');
+            var csBox = document.getElementById('sslrank-pref-mng-cs-entrybox');
             var item = csBox.selectedItem;
             if (!item) {
                 return;
@@ -503,17 +503,17 @@
 
         var cxRatingApply = function () {
             cxRating.cipherSuite =
-                Number(document.getElementById('ssleuth-pref-cipher-suite-weight').value);
+                Number(document.getElementById('sslrank-pref-cipher-suite-weight').value);
             cxRating.pfs =
-                Number(document.getElementById('ssleuth-pref-pfs-weight').value);
+                Number(document.getElementById('sslrank-pref-pfs-weight').value);
             cxRating.evCert =
-                Number(document.getElementById('ssleuth-pref-ev-weight').value);
+                Number(document.getElementById('sslrank-pref-ev-weight').value);
             cxRating.ffStatus =
-                Number(document.getElementById('ssleuth-pref-ffstatus-weight').value);
+                Number(document.getElementById('sslrank-pref-ffstatus-weight').value);
             cxRating.certStatus =
-                Number(document.getElementById('ssleuth-pref-certstate-weight').value);
+                Number(document.getElementById('sslrank-pref-certstate-weight').value);
             cxRating.signature =
-                Number(document.getElementById('ssleuth-pref-signature-weight').value);
+                Number(document.getElementById('sslrank-pref-signature-weight').value);
             cxRating.total = cxRating.cipherSuite +
                 cxRating.pfs +
                 cxRating.evCert +
@@ -531,11 +531,11 @@
 
         var csRatingApply = function () {
             csRating.keyExchange =
-                Number(document.getElementById('ssleuth-pref-cs-kx-weight').value);
+                Number(document.getElementById('sslrank-pref-cs-kx-weight').value);
             csRating.bulkCipher =
-                Number(document.getElementById('ssleuth-pref-cs-cipher-weight').value);
+                Number(document.getElementById('sslrank-pref-cs-cipher-weight').value);
             csRating.hmac =
-                Number(document.getElementById('ssleuth-pref-cs-hmac-weight').value);
+                Number(document.getElementById('sslrank-pref-cs-hmac-weight').value);
             csRating.total = csRating.keyExchange +
                 csRating.bulkCipher +
                 csRating.hmac;
@@ -552,7 +552,7 @@
             try {
                 // TODO : flush bundle, and create new bundle
                 var bundle = Services.strings
-                    .createBundle('chrome://ssleuth/locale/panel.properties');
+                    .createBundle('chrome://sslrank/locale/panel.properties');
                 return bundle.GetStringFromName(name);
 
             } catch (e) {
@@ -568,7 +568,7 @@
     }());
 
     window.addEventListener('load', prefUI.init, false);
-    window.addEventListener('ssleuth-prefwindow-index',
+    window.addEventListener('sslrank-prefwindow-index',
         prefUI.selectIndex, true);
 
 }());

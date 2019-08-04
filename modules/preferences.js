@@ -8,7 +8,7 @@ const Cu = Components.utils;
 
 Cu.import('resource://gre/modules/XPCOMUtils.jsm');
 Cu.import('resource://gre/modules/Services.jsm');
-Cu.import('resource://ssleuth/cipher-suites.js');
+Cu.import('resource://sslrank/cipher-suites.js');
 
 var preferences = (function () {
 
@@ -32,7 +32,7 @@ var preferences = (function () {
         }
     };
 
-    var BRANCH = 'extensions.ssleuth.',
+    var BRANCH = 'extensions.sslrank.',
         TLS = 'security.ssl3.',
         service = Cc['@mozilla.org/preferences-service;1'].getService(Ci.nsIPrefBranch),
         _branch,
@@ -107,7 +107,7 @@ var preferences = (function () {
         if (null == prefsTab || prefsTabWin.closed) {
 
             prefsTab = win.gBrowser.loadOneTab(
-                'chrome://ssleuth/content/preferences.xul', {
+                'chrome://sslrank/content/preferences.xul', {
                     inBackground: false
                 });
             prefsTabWin = win;
@@ -128,7 +128,7 @@ var preferences = (function () {
         }
 
         var event = new prefsTab.linkedBrowser
-            .contentWindow.CustomEvent('ssleuth-prefwindow-index', {
+            .contentWindow.CustomEvent('sslrank-prefwindow-index', {
                 'detail': index
             });
 

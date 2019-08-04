@@ -1,7 +1,7 @@
-skin 		ssleuth 	classic/1.0 			content/skin/
-content		ssleuth		content/
+skin 		sslrank 	classic/1.0 			content/skin/
+content		sslrank		content/
 
-locale		ssleuth		de-DE		locale/de-DE/
-locale		ssleuth		en-US		locale/en-US/
-locale		ssleuth		fr-FR		locale/fr-FR/
-locale		ssleuth		pl-PL		locale/pl-PL/
+locale		sslrank		de-DE		locale/de-DE/
+locale		sslrank		en-US		locale/en-US/
+locale		sslrank		fr-FR		locale/fr-FR/
+locale		sslrank		pl-PL		locale/pl-PL/

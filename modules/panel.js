@@ -4,10 +4,10 @@ const Cu = Components.utils;
 
 Cu.import('resource://gre/modules/XPCOMUtils.jsm');
 Cu.import('resource://gre/modules/Services.jsm');
-Cu.import('resource://ssleuth/utils.js');
+Cu.import('resource://sslrank/utils.js');
 
 var panel = function (win) {
-    const PANEL_ID = 'ssleuth-panel';
+    const PANEL_ID = 'sslrank-panel';
 
     var create = function (position) {
         var aPanel = win.document.createElement('panel');
@@ -24,17 +24,17 @@ var panel = function (win) {
 
     var setFont = function (panelFont) {
         var doc = win.document,
-            bodyFontClass = 'ssleuth-text-body-class',
-            titleFontClass = 'ssleuth-text-title-class',
-            imgStateClass = 'ssleuth-img-state';
+            bodyFontClass = 'sslrank-text-body-class',
+            titleFontClass = 'sslrank-text-title-class',
+            imgStateClass = 'sslrank-img-state';
 
         // 0 = default, 1 = medium, 2 = large
-        var configBody = ['ssleuth-text-body-small', 'ssleuth-text-body-medium',
-          'ssleuth-text-body-large'],
-            configTitle = ['ssleuth-text-title-small', 'ssleuth-text-title-medium',
-          'ssleuth-text-title-large'],
-            configImg = ['ssleuth-img-state-small', 'ssleuth-img-state-medium',
-          'ssleuth-img-state-large'];
+        var configBody = ['sslrank-text-body-small', 'sslrank-text-body-medium',
+          'sslrank-text-body-large'],
+            configTitle = ['sslrank-text-title-small', 'sslrank-text-title-medium',
+          'sslrank-text-title-large'],
+            configImg = ['sslrank-img-state-small', 'sslrank-img-state-medium',
+          'sslrank-img-state-large'];
         try {
             var bodyText = doc.getElementsByClassName(bodyFontClass),
                 titleText = doc.getElementsByClassName(titleFontClass),
@@ -110,11 +110,11 @@ var panelbox = function (win) {
         try {
             function panelMain() {
                 let mainVbox = elem('vbox', {
-                    id: 'ssleuth-panel-main-vbox',
+                    id: 'sslrank-panel-main-vbox',
                     flex: '2'
                 }); {
                     let httpsBox = mainVbox.appendChild(elem('vbox', {
-                        id: 'ssleuth-panel-vbox-https',
+                        id: 'sslrank-panel-vbox-https',
                         flex: '2',
                         width: HTTPS_PANEL_WIDTH,
                         // height: '250',
@@ -130,109 +130,109 @@ var panelbox = function (win) {
                                 width: IMG_MARGIN_WIDTH
                             }));
                             vb.appendChild(elem('image', {
-                                id: 'ssleuth-img-cipher-rank',
-                                class: 'ssleuth-img-state'
+                                id: 'sslrank-img-cipher-rank',
+                                class: 'sslrank-img-state'
                             }));
                         } {
                             let vb = hb.appendChild(elem('vbox', {
                                 flex: '2'
                             }));
                             vb.appendChild(elem('description', {
-                                id: 'ssleuth-text-cipher-suite-label',
+                                id: 'sslrank-text-cipher-suite-label',
                                 value: utils.getText('ciphersuite.text'),
-                                class: 'ssleuth-text-title-class'
+                                class: 'sslrank-text-title-class'
                             })); {
                                 let hb = vb.appendChild(elem('hbox', {
-                                    id: 'ssleuth-text-cipher-suite-name',
+                                    id: 'sslrank-text-cipher-suite-name',
                                     align: 'baseline'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cipher-suite',
-                                    class: 'ssleuth-text-body-class'
+                                    id: 'sslrank-text-cipher-suite',
+                                    class: 'sslrank-text-body-class'
                                 })); {
                                     let chb = hb.appendChild(elem('hbox', {
                                         flex: '2',
                                         align: 'right'
                                     }));
                                     chb.appendChild(elem('description', {
-                                        id: 'ssleuth-cipher-suite-rating',
-                                        class: 'ssleuth-text-body-rating'
+                                        id: 'sslrank-cipher-suite-rating',
+                                        class: 'sslrank-text-body-rating'
                                     }));
                                 }
                             } {
                                 let hb = vb.appendChild(elem('hbox', {
-                                    id: 'ssleuth-text-key-exchange',
+                                    id: 'sslrank-text-key-exchange',
                                     hidden: 'true'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-key-exchange-label',
+                                    id: 'sslrank-text-key-exchange-label',
                                     value: utils.getText('keyexchange.text'),
-                                    class: 'ssleuth-text-body-class'
+                                    class: 'sslrank-text-body-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cipher-suite-kxchange',
-                                    class: 'ssleuth-text-body-class'
+                                    id: 'sslrank-text-cipher-suite-kxchange',
+                                    class: 'sslrank-text-body-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cipher-suite-kxchange-notes',
-                                    class: 'ssleuth-text-body-class'
+                                    id: 'sslrank-text-cipher-suite-kxchange-notes',
+                                    class: 'sslrank-text-body-class'
                                 }));
                             } {
                                 let hb = vb.appendChild(elem('hbox', {
-                                    id: 'ssleuth-text-authentication'
+                                    id: 'sslrank-text-authentication'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-authentication-label',
+                                    id: 'sslrank-text-authentication-label',
                                     value: utils.getText('authentication.text'),
-                                    class: 'ssleuth-text-body-class'
+                                    class: 'sslrank-text-body-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cipher-suite-auth',
-                                    class: 'ssleuth-text-body-class'
+                                    id: 'sslrank-text-cipher-suite-auth',
+                                    class: 'sslrank-text-body-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cipher-suite-auth-notes',
-                                    class: 'ssleuth-text-body-class'
+                                    id: 'sslrank-text-cipher-suite-auth-notes',
+                                    class: 'sslrank-text-body-class'
                                 }));
                             } {
                                 let hb = vb.appendChild(elem('hbox', {
-                                    id: 'ssleuth-text-bulk-cipher'
+                                    id: 'sslrank-text-bulk-cipher'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-bulk-cipher-label',
+                                    id: 'sslrank-text-bulk-cipher-label',
                                     value: utils.getText('bulkcipher.text'),
-                                    class: 'ssleuth-text-body-class'
+                                    class: 'sslrank-text-body-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cipher-suite-bulkcipher',
-                                    class: 'ssleuth-text-body-class'
+                                    id: 'sslrank-text-cipher-suite-bulkcipher',
+                                    class: 'sslrank-text-body-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cipher-suite-bulkcipher-notes',
-                                    class: 'ssleuth-text-body-class'
+                                    id: 'sslrank-text-cipher-suite-bulkcipher-notes',
+                                    class: 'sslrank-text-body-class'
                                 }));
                             } {
                                 let hb = vb.appendChild(elem('hbox', {
-                                    id: 'ssleuth-text-hmac'
+                                    id: 'sslrank-text-hmac'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-hmac-label',
+                                    id: 'sslrank-text-hmac-label',
                                     value: utils.getText('hmac.text'),
-                                    class: 'ssleuth-text-body-class'
+                                    class: 'sslrank-text-body-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cipher-suite-hmac',
-                                    class: 'ssleuth-text-body-class'
+                                    id: 'sslrank-text-cipher-suite-hmac',
+                                    class: 'sslrank-text-body-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cipher-suite-hmac-notes',
-                                    class: 'ssleuth-text-body-class'
+                                    id: 'sslrank-text-cipher-suite-hmac-notes',
+                                    class: 'sslrank-text-body-class'
                                 }));
                             }
                         }
                     } {
                         let hb = httpsBox.appendChild(elem('hbox', {
-                            id: 'ssleuth-hbox-2',
+                            id: 'sslrank-hbox-2',
                             align: 'top'
                         })); {
                             let chb = hb.appendChild(elem('hbox', {
@@ -240,8 +240,8 @@ var panelbox = function (win) {
                                 width: IMG_MARGIN_WIDTH
                             }));
                             chb.appendChild(elem('image', {
-                                id: 'ssleuth-img-p-f-secrecy',
-                                class: 'ssleuth-img-state'
+                                id: 'sslrank-img-p-f-secrecy',
+                                class: 'sslrank-img-state'
                             }));
                         } {
                             let chb = hb.appendChild(elem('hbox', {
@@ -249,27 +249,27 @@ var panelbox = function (win) {
                                 flex: '2'
                             }));
                             chb.appendChild(elem('description', {
-                                id: 'ssleuth-text-p-f-secrecy-label',
+                                id: 'sslrank-text-p-f-secrecy-label',
                                 value: utils.getText('pfs.text'),
-                                class: 'ssleuth-text-title-class'
+                                class: 'sslrank-text-title-class'
                             }));
                             chb.appendChild(elem('description', {
-                                id: 'ssleuth-text-p-f-secrecy',
-                                class: 'ssleuth-text-title-class'
+                                id: 'sslrank-text-p-f-secrecy',
+                                class: 'sslrank-text-title-class'
                             })); {
                                 let cchb = chb.appendChild(elem('hbox', {
                                     flex: '2',
                                     align: 'right'
                                 }));
                                 cchb.appendChild(elem('description', {
-                                    id: 'ssleuth-p-f-secrecy-rating',
-                                    class: 'ssleuth-text-body-rating'
+                                    id: 'sslrank-p-f-secrecy-rating',
+                                    class: 'sslrank-text-body-rating'
                                 }));
                             }
                         }
                     } {
                         let hb = httpsBox.appendChild(elem('hbox', {
-                            id: 'ssleuth-hbox-3',
+                            id: 'sslrank-hbox-3',
                             align: 'top'
                         })); {
                             let chb = hb.appendChild(elem('hbox', {
@@ -277,8 +277,8 @@ var panelbox = function (win) {
                                 width: IMG_MARGIN_WIDTH
                             }));
                             chb.appendChild(elem('image', {
-                                id: 'ssleuth-img-tls-version',
-                                class: 'ssleuth-img-state'
+                                id: 'sslrank-img-tls-version',
+                                class: 'sslrank-img-state'
                             }));
                         } {
                             let chb = hb.appendChild(elem('hbox', {
@@ -286,13 +286,13 @@ var panelbox = function (win) {
                                 flex: '2'
                             }));
                             chb.appendChild(elem('description', {
-                                id: 'ssleuth-text-tls-version-label',
+                                id: 'sslrank-text-tls-version-label',
                                 value: utils.getText('ssltlsversion.text'),
-                                class: 'ssleuth-text-title-class'
+                                class: 'sslrank-text-title-class'
                             }));
                             chb.appendChild(elem('description', {
-                                id: 'ssleuth-text-tls-version',
-                                class: 'ssleuth-text-title-class'
+                                id: 'sslrank-text-tls-version',
+                                class: 'sslrank-text-title-class'
                             }));
                             /* {
                                          let cchb = chb.appendChild(elem('hbox', {
@@ -300,14 +300,14 @@ var panelbox = function (win) {
                                            align: 'right'
                                          }));
                                          cchb.appendChild(elem('description', {
-                                           id: 'ssleuth-tls-version-rating',
-                                           class: 'ssleuth-text-body-rating'
+                                           id: 'sslrank-tls-version-rating',
+                                           class: 'sslrank-text-body-rating'
                                          }));
                                        } */
                         }
                     } {
                         let hb = httpsBox.appendChild(elem('hbox', {
-                            id: 'ssleuth-ff-connection-status',
+                            id: 'sslrank-ff-connection-status',
                             flex: '2'
                         })); {
                             let vb = hb.appendChild(elem('vbox', {
@@ -315,41 +315,41 @@ var panelbox = function (win) {
                                 width: IMG_MARGIN_WIDTH
                             }));
                             vb.appendChild(elem('image', {
-                                id: 'ssleuth-img-ff-connection-status',
-                                class: 'ssleuth-img-state'
+                                id: 'sslrank-img-ff-connection-status',
+                                class: 'sslrank-img-state'
                             }));
                         } {
                             let vb = hb.appendChild(elem('vbox', {
-                                id: 'ssleuth-ff-connection-status-text-vbox',
+                                id: 'sslrank-ff-connection-status-text-vbox',
                                 flex: '1'
                             })); {
                                 let hb = vb.appendChild(elem('hbox', {
-                                    id: 'ssleuth-ff-connection-status-text-hbox',
+                                    id: 'sslrank-ff-connection-status-text-hbox',
                                     align: 'baseline'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-conn-status',
+                                    id: 'sslrank-text-conn-status',
                                     value: utils.getText('connectionstatus.text'),
-                                    class: 'ssleuth-text-title-class'
+                                    class: 'sslrank-text-title-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-ff-connection-status',
-                                    class: 'ssleuth-text-title-class'
+                                    id: 'sslrank-text-ff-connection-status',
+                                    class: 'sslrank-text-title-class'
                                 })); {
                                     let chb = hb.appendChild(elem('hbox', {
                                         flex: '2',
                                         align: 'right'
                                     }));
                                     chb.appendChild(elem('description', {
-                                        id: 'ssleuth-ff-connection-status-rating',
-                                        class: 'ssleuth-text-body-rating'
+                                        id: 'sslrank-ff-connection-status-rating',
+                                        class: 'sslrank-text-body-rating'
                                     }));
                                 }
                             }
                             let desc1 = vb.appendChild(elem('description', {
-                                id: 'ssleuth-text-ff-connection-status-broken',
+                                id: 'sslrank-text-ff-connection-status-broken',
                                 hidden: true,
-                                class: 'ssleuth-text-body-class'
+                                class: 'sslrank-text-body-class'
                             }));
                             desc1.textContent = utils.getText('connectionstatus.insecure');
                         }
@@ -363,8 +363,8 @@ var panelbox = function (win) {
                                 width: IMG_MARGIN_WIDTH
                             }));
                             chb.appendChild(elem('image', {
-                                id: 'ssleuth-img-cert-state',
-                                class: 'ssleuth-img-state'
+                                id: 'sslrank-img-cert-state',
+                                class: 'sslrank-img-state'
                             }));
                         } {
                             let vb = hb.appendChild(elem('vbox', {
@@ -374,44 +374,44 @@ var panelbox = function (win) {
                                     align: 'baseline'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cert-label',
+                                    id: 'sslrank-text-cert-label',
                                     value: utils.getText('certificate.text'),
-                                    class: 'ssleuth-text-title-class'
+                                    class: 'sslrank-text-title-class'
                                 })); {
                                     let chb = hb.appendChild(elem('hbox', {
                                         flex: '2',
                                         align: 'right'
                                     }));
                                     chb.appendChild(elem('description', {
-                                        id: 'ssleuth-cert-status-rating',
-                                        class: 'ssleuth-text-body-rating'
+                                        id: 'sslrank-cert-status-rating',
+                                        class: 'sslrank-text-body-rating'
                                     }));
                                 }
                             }
                             vb.appendChild(elem('description', {
-                                id: 'ssleuth-text-cert-domain-mismatch',
+                                id: 'sslrank-text-cert-domain-mismatch',
                                 value: utils.getText('certificate.dommismatch'),
-                                class: 'ssleuth-text-body-class'
+                                class: 'sslrank-text-body-class'
                             })); {
                                 let hb = vb.appendChild(elem('hbox', {
                                     align: 'baseline'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cert-ev',
+                                    id: 'sslrank-text-cert-ev',
                                     value: utils.getText('extendedvalidation.text'),
-                                    class: 'ssleuth-text-body-class'
+                                    class: 'sslrank-text-body-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cert-extended-validation',
-                                    class: 'ssleuth-text-body-class'
+                                    id: 'sslrank-text-cert-extended-validation',
+                                    class: 'sslrank-text-body-class'
                                 })); {
                                     let chb = hb.appendChild(elem('hbox', {
                                         flex: '2',
                                         align: 'right'
                                     }));
                                     chb.appendChild(elem('description', {
-                                        id: 'ssleuth-cert-ev-rating',
-                                        class: 'ssleuth-text-body-rating'
+                                        id: 'sslrank-cert-ev-rating',
+                                        class: 'sslrank-text-body-rating'
                                     }));
                                 }
                             } {
@@ -419,30 +419,30 @@ var panelbox = function (win) {
                                     align: 'baseline'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cert-sigalg-text',
+                                    id: 'sslrank-text-cert-sigalg-text',
                                     value: utils.getText('signature.text'),
-                                    class: 'ssleuth-text-body-class'
+                                    class: 'sslrank-text-body-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cert-sigalg',
-                                    class: 'ssleuth-text-body-class'
+                                    id: 'sslrank-text-cert-sigalg',
+                                    class: 'sslrank-text-body-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cert-pub-key-text',
+                                    id: 'sslrank-text-cert-pub-key-text',
                                     value: utils.getText('certificate.key'),
-                                    class: 'ssleuth-text-body-class'
+                                    class: 'sslrank-text-body-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cert-pub-key',
-                                    class: 'ssleuth-text-body-class'
+                                    id: 'sslrank-text-cert-pub-key',
+                                    class: 'sslrank-text-body-class'
                                 })); {
                                     let chb = hb.appendChild(elem('hbox', {
                                         flex: '2',
                                         align: 'right'
                                     }));
                                     chb.appendChild(elem('description', {
-                                        id: 'ssleuth-cert-sigalg-rating',
-                                        class: 'ssleuth-text-body-rating'
+                                        id: 'sslrank-cert-sigalg-rating',
+                                        class: 'sslrank-text-body-rating'
                                     }));
                                 }
                             } {
@@ -450,34 +450,34 @@ var panelbox = function (win) {
                                     align: 'baseline'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cert-cn-label',
+                                    id: 'sslrank-text-cert-cn-label',
                                     value: utils.getText('certificate.commonname'),
-                                    class: 'ssleuth-text-body-class'
+                                    class: 'sslrank-text-body-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cert-common-name',
-                                    class: 'ssleuth-text-body-class'
+                                    id: 'sslrank-text-cert-common-name',
+                                    class: 'sslrank-text-body-class'
                                 }));
                             } {
                                 let hb = vb.appendChild(elem('hbox', {
                                     align: 'baseline'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cert-issuedto',
+                                    id: 'sslrank-text-cert-issuedto',
                                     value: utils.getText('certificate.issuedto'),
-                                    class: 'ssleuth-text-body-class'
+                                    class: 'sslrank-text-body-class'
                                 })); {
                                     let vb = hb.appendChild(elem('vbox', {
                                         align: 'baseline',
                                         flex: '1'
                                     }));
                                     vb.appendChild(elem('description', {
-                                        id: 'ssleuth-text-cert-org',
-                                        class: 'ssleuth-text-title-class'
+                                        id: 'sslrank-text-cert-org',
+                                        class: 'sslrank-text-title-class'
                                     }));
                                     vb.appendChild(elem('description', {
-                                        id: 'ssleuth-text-cert-org-unit',
-                                        class: 'ssleuth-text-body-class'
+                                        id: 'sslrank-text-cert-org-unit',
+                                        class: 'sslrank-text-body-class'
                                     }));
                                 }
                             } {
@@ -485,62 +485,62 @@ var panelbox = function (win) {
                                     align: 'baseline'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cert-issuedby',
+                                    id: 'sslrank-text-cert-issuedby',
                                     value: utils.getText('certificate.issuedby'),
-                                    class: 'ssleuth-text-body-class'
+                                    class: 'sslrank-text-body-class'
                                 })); {
                                     let vb = hb.appendChild(elem('vbox', {
                                         align: 'baseline',
                                         flex: '1'
                                     }));
                                     vb.appendChild(elem('description', {
-                                        id: 'ssleuth-text-cert-issuer-org',
-                                        class: 'ssleuth-text-title-class'
+                                        id: 'sslrank-text-cert-issuer-org',
+                                        class: 'sslrank-text-title-class'
                                     }));
                                     vb.appendChild(elem('description', {
-                                        id: 'ssleuth-text-cert-issuer-org-unit',
-                                        class: 'ssleuth-text-body-class'
+                                        id: 'sslrank-text-cert-issuer-org-unit',
+                                        class: 'sslrank-text-body-class'
                                     }));
                                 }
                             } {
                                 let hb = vb.appendChild(elem('hbox', {
-                                    id: 'ssleuth-text-cert-validity-box',
+                                    id: 'sslrank-text-cert-validity-box',
                                     align: 'baseline'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cert-validity-text',
+                                    id: 'sslrank-text-cert-validity-text',
                                     value: utils.getText('certificate.validity'),
-                                    class: 'ssleuth-text-body-class'
+                                    class: 'sslrank-text-body-class'
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cert-validity',
-                                    class: 'ssleuth-text-body-class'
+                                    id: 'sslrank-text-cert-validity',
+                                    class: 'sslrank-text-body-class'
                                 }));
                             } {
                                 let hb = vb.appendChild(elem('hbox', {
-                                    id: 'ssleuth-text-cert-fingerprint-box',
+                                    id: 'sslrank-text-cert-fingerprint-box',
                                     align: 'baseline',
                                 }));
                                 hb.appendChild(elem('description', {
-                                    id: 'ssleuth-text-cert-fingerprint-label',
+                                    id: 'sslrank-text-cert-fingerprint-label',
                                     value: utils.getText('certificate.fingerprint'),
-                                    class: 'ssleuth-text-body-class'
+                                    class: 'sslrank-text-body-class'
                                 })); {
                                     let vb = hb.appendChild(elem('vbox', {
                                         align: 'baseline',
                                         flex: '1'
                                     }));
                                     vb.appendChild(elem('description', {
-                                        id: 'ssleuth-text-cert-fingerprint-1',
-                                        class: 'ssleuth-text-body-class'
+                                        id: 'sslrank-text-cert-fingerprint-1',
+                                        class: 'sslrank-text-body-class'
                                     }));
                                     vb.appendChild(elem('description', {
-                                        id: 'ssleuth-text-cert-fingerprint-2',
-                                        class: 'ssleuth-text-body-class'
+                                        id: 'sslrank-text-cert-fingerprint-2',
+                                        class: 'sslrank-text-body-class'
                                     }));
                                     vb.appendChild(elem('description', {
-                                        id: 'ssleuth-text-cert-fingerprint-3',
-                                        class: 'ssleuth-text-body-class'
+                                        id: 'sslrank-text-cert-fingerprint-3',
+                                        class: 'sslrank-text-body-class'
                                     }));
                                 }
                             }
@@ -549,7 +549,7 @@ var panelbox = function (win) {
 
                 } {
                     let httpBox = mainVbox.appendChild(elem('hbox', {
-                        id: 'ssleuth-panel-box-http',
+                        id: 'sslrank-panel-box-http',
                         align: 'baseline',
                         flex: '2',
                         width: HTTP_PANEL_WIDTH,
@@ -561,33 +561,33 @@ var panelbox = function (win) {
                             width: IMG_MARGIN_WIDTH
                         }));
                         vb.appendChild(elem('image', {
-                            id: 'ssleuth-img-http-omg',
-                            class: 'ssleuth-img-state'
+                            id: 'sslrank-img-http-omg',
+                            class: 'sslrank-img-state'
                         }));
                     } {
                         let vb = httpBox.appendChild(elem('vbox', {
                             flex: '1'
                         }));
                         let h1 = vb.appendChild(elem('description', {
-                            id: 'ssleuth-text-http-1',
-                            class: 'ssleuth-text-title-class'
+                            id: 'sslrank-text-http-1',
+                            class: 'sslrank-text-title-class'
                         }));
                         h1.textContent = utils.getText('http.unencrypted');
                         let h2 = vb.appendChild(elem('description', {
-                            id: 'ssleuth-text-http-2',
-                            class: 'ssleuth-text-title-class'
+                            id: 'sslrank-text-http-2',
+                            class: 'sslrank-text-title-class'
                         }));
 
                         h2.textContent = utils.getText('http.connectattempt');
                         vb.appendChild(elem('label', {
-                            id: 'ssleuth-panel-https-link',
+                            id: 'sslrank-panel-https-link',
                             class: 'text-link',
                             crop: 'center',
                             focus: 'true'
                         }));
                         let d1 = vb.appendChild(elem('description', {
-                            id: 'ssleuth-text-http-note',
-                            class: 'ssleuth-text-body-class'
+                            id: 'sslrank-text-http-note',
+                            class: 'sslrank-text-body-class'
                         }));
                         d1.textContent = utils.getText('http.link.disclaimer');
                     }
@@ -601,13 +601,13 @@ var panelbox = function (win) {
                 // Or follow something like this : 
                 //  http://mike.kaply.com/2011/08/05/richlistbox-tricks-for-your-add-on/
                 let domainsVb = elem('vbox', {
-                    id: 'ssleuth-panel-domains-vbox',
+                    id: 'sslrank-panel-domains-vbox',
                     width: HTTPS_PANEL_WIDTH,
                     flex: '1'
                 });
 
                 let rb = domainsVb.appendChild(elem('richlistbox', {
-                    id: 'ssleuth-paneltab-domains-list',
+                    id: 'sslrank-paneltab-domains-list',
                     // TODO : Fix. css in sheet is not working! 
                     style: '-moz-appearance: none; background-color: rgba(0, 0, 0, 0);',
                     flex: '1',
@@ -621,7 +621,7 @@ var panelbox = function (win) {
 
             function panelCipherSuites() {
                 let csVb = elem('vbox', {
-                    id: 'ssleuth-paneltab-ciphers',
+                    id: 'sslrank-paneltab-ciphers',
                     width: HTTPS_PANEL_WIDTH,
                     flex: '1'
                 });
@@ -633,7 +633,7 @@ var panelbox = function (win) {
                     cols.appendChild(elem('column', {}));
                 } {
                     grid.appendChild(elem('rows', {
-                        id: 'ssleuth-paneltab-ciphers-rows'
+                        id: 'sslrank-paneltab-ciphers-rows'
                     }));
                 }
                 csVb.appendChild(elem('separator', {
@@ -643,11 +643,11 @@ var panelbox = function (win) {
                 let hb = csVb.appendChild(elem('hbox', {})); {
                     hb.appendChild(elem('button', {
                         label: utils.getText('menu.resetall'),
-                        id: 'ssleuth-paneltab-ciphers-btn-reset',
+                        id: 'sslrank-paneltab-ciphers-btn-reset',
                     }));
                     hb.appendChild(elem('button', {
                         label: utils.getText('menu.customlist'),
-                        id: 'ssleuth-paneltab-ciphers-btn-custom',
+                        id: 'sslrank-paneltab-ciphers-btn-custom',
                     }));
                 }
 
@@ -656,41 +656,41 @@ var panelbox = function (win) {
 
             // Box container for the panel. 
             let panelvbox = elem('vbox', {
-                id: 'ssleuth-panel-vbox'
+                id: 'sslrank-panel-vbox'
             }); {
                 {
                     let hb = panelvbox.appendChild(elem('hbox', {
-                        id: 'ssleuth-img-cipher-rank-star',
+                        id: 'sslrank-img-cipher-rank-star',
                         align: 'baseline',
                         height: '20'
                     }));
 
                     for (var i = 1; i <= 10; i++) {
                         hb.appendChild(elem('image', {
-                            id: 'ssleuth-img-cipher-rank-star-' + i,
-                            class: 'ssleuth-star'
+                            id: 'sslrank-img-cipher-rank-star-' + i,
+                            class: 'sslrank-star'
                         }));
                     }
 
                     hb.appendChild(elem('description', {
-                        id: 'ssleuth-text-cipher-rank-numeric',
-                        class: 'ssleuth-text-title-class'
+                        id: 'sslrank-text-cipher-rank-numeric',
+                        class: 'sslrank-text-title-class'
                     })); {
                         let chb = hb.appendChild(elem('hbox', {
-                            id: 'ssleuth-domains-rating-box',
+                            id: 'sslrank-domains-rating-box',
                             align: 'baseline',
                         }));
 
                         chb.appendChild(elem('description', {
-                            id: 'ssleuth-text-domains-rating-separator',
+                            id: 'sslrank-text-domains-rating-separator',
                             value: ' | ',
                         }));
                         chb.appendChild(elem('image', {
-                            id: 'ssleuth-img-domains-rating',
+                            id: 'sslrank-img-domains-rating',
                             width: '8',
                         }));
                         chb.appendChild(elem('description', {
-                            id: 'ssleuth-text-domains-rating-numeric',
+                            id: 'sslrank-text-domains-rating-numeric',
                         }));
                     }
                 } {
@@ -702,12 +702,12 @@ var panelbox = function (win) {
                     // A horizontal listitem/toolbar radio mode buttons doesn't behave well as expected.
                     // Then the remaining option is to hack up tabs on my own.
                     let hb = panelvbox.appendChild(elem('hbox', {
-                        class: 'ssleuth-paneltab-box'
+                        class: 'sslrank-paneltab-box'
                     })); {
                         let chb = hb.appendChild(elem('hbox', {
-                            id: 'ssleuth-paneltab-main',
+                            id: 'sslrank-paneltab-main',
                             _selected: 'true',
-                            class: 'ssleuth-paneltab-tab'
+                            class: 'sslrank-paneltab-tab'
                         })); {
                             chb.appendChild(elem('description', {
                                 value: utils.getText('tab.primary')
@@ -717,64 +717,64 @@ var panelbox = function (win) {
                         // TODO : 'true' 'false' to boolean? _selected is needed for css. 
                         //          CSS can't check boolean ?
                         chb.addEventListener('click', function () {
-                            doc.getElementById('ssleuth-panel-deck').selectedIndex = 0;
-                            doc.getElementById('ssleuth-paneltab-domains').setAttribute('_selected', 'false');
-                            doc.getElementById('ssleuth-paneltab-cipher').setAttribute('_selected', 'false');
-                            doc.getElementById('ssleuth-paneltab-main').setAttribute('_selected', 'true');
+                            doc.getElementById('sslrank-panel-deck').selectedIndex = 0;
+                            doc.getElementById('sslrank-paneltab-domains').setAttribute('_selected', 'false');
+                            doc.getElementById('sslrank-paneltab-cipher').setAttribute('_selected', 'false');
+                            doc.getElementById('sslrank-paneltab-main').setAttribute('_selected', 'true');
                         }, false);
                         chb = hb.appendChild(elem('hbox', {
-                            id: 'ssleuth-paneltab-domains',
+                            id: 'sslrank-paneltab-domains',
                             _selected: 'false',
-                            class: 'ssleuth-paneltab-tab'
+                            class: 'sslrank-paneltab-tab'
                         })); {
                             chb.appendChild(elem('description', {
                                 value: utils.getText('tab.domains')
                             }));
                         }
                         chb.addEventListener('click', function () {
-                            doc.getElementById('ssleuth-panel-deck').selectedIndex = 1;
-                            doc.getElementById('ssleuth-paneltab-main').setAttribute('_selected', 'false');
-                            doc.getElementById('ssleuth-paneltab-cipher').setAttribute('_selected', 'false');
-                            doc.getElementById('ssleuth-paneltab-domains').setAttribute('_selected', 'true');
+                            doc.getElementById('sslrank-panel-deck').selectedIndex = 1;
+                            doc.getElementById('sslrank-paneltab-main').setAttribute('_selected', 'false');
+                            doc.getElementById('sslrank-paneltab-cipher').setAttribute('_selected', 'false');
+                            doc.getElementById('sslrank-paneltab-domains').setAttribute('_selected', 'true');
                         }, false);
                         chb = hb.appendChild(elem('hbox', {
-                            id: 'ssleuth-paneltab-cipher',
+                            id: 'sslrank-paneltab-cipher',
                             _selected: 'false',
-                            class: 'ssleuth-paneltab-tab'
+                            class: 'sslrank-paneltab-tab'
                         })); {
                             chb.appendChild(elem('description', {
                                 value: utils.getText('tab.ciphersuites')
                             }));
                         }
                         chb.addEventListener('click', function () {
-                            doc.getElementById('ssleuth-panel-deck').selectedIndex = 2;
-                            doc.getElementById('ssleuth-paneltab-main').setAttribute('_selected', 'false');
-                            doc.getElementById('ssleuth-paneltab-domains').setAttribute('_selected', 'false');
-                            doc.getElementById('ssleuth-paneltab-cipher').setAttribute('_selected', 'true');
+                            doc.getElementById('sslrank-panel-deck').selectedIndex = 2;
+                            doc.getElementById('sslrank-paneltab-main').setAttribute('_selected', 'false');
+                            doc.getElementById('sslrank-paneltab-domains').setAttribute('_selected', 'false');
+                            doc.getElementById('sslrank-paneltab-cipher').setAttribute('_selected', 'true');
                         }, false);
 
                         chb = hb.appendChild(elem('hbox', {
-                            class: 'ssleuth-paneltab-tab',
+                            class: 'sslrank-paneltab-tab',
                             align: 'baseline',
                             _selected: 'false'
                         })); {
                             phb = chb.appendChild(elem('hbox', {
-                                id: 'ssleuth-paneltab-pref-box',
+                                id: 'sslrank-paneltab-pref-box',
                                 style: 'margin-left: 50px;'
                             }));
                             var clipboard = phb.appendChild(elem('image', {
-                                id: 'ssleuth-img-panel-clipboard',
+                                id: 'sslrank-img-panel-clipboard',
                                 tooltiptext: utils.getText('panel.tooltip.clipboard'),
                             }));
                             phb.appendChild(elem('image', {
-                                id: 'ssleuth-img-panel-pref-icon',
+                                id: 'sslrank-img-panel-pref-icon',
                                 tooltiptext: utils.getText('panel.tooltip.preferences'),
                             }));
                         }
                     }
                 } {
                     let deck = panelvbox.appendChild(elem('deck', {
-                        id: 'ssleuth-panel-deck'
+                        id: 'sslrank-panel-deck'
                     }));
                     deck.appendChild(panelMain());
                     deck.appendChild(panelDomains());
@@ -785,7 +785,7 @@ var panelbox = function (win) {
             return panelvbox;
 
         } catch (e) {
-            log.error('Error ssleuth panel : ' + e.message);
+            log.error('Error sslrank panel : ' + e.message);
         }
     };
 

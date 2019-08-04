@@ -1,46 +1,46 @@
 @-moz-document url(chrome://browser/content/browser.xul),
-url(chrome://ssleuth/content/preferences.xul) {
+url(chrome://sslrank/content/preferences.xul) {
     /*  skin/toolbar-button.css  */
-    #ssleuth-tb-button,
-    #ssleuth-ub-img {
+    #sslrank-tb-button,
+    #sslrank-ub-img {
         -moz-box-orient: horizontal !important;
     }
-    #ssleuth-ub-img[rank="default"] {
-        list-style-image: url("chrome://ssleuth/skin/btn-large-gray.png");
+    #sslrank-ub-img[rank="default"] {
+        list-style-image: url("chrome://sslrank/skin/panel-clipboard.png");
     }
-    #ssleuth-ub-img[rank="low"] {
-        list-style-image: url("chrome://ssleuth/skin/btn-large-red.png");
+    #sslrank-ub-img[rank="low"] {
+        list-style-image: url("chrome://sslrank/skin/status-bad.png");
     }
-    #ssleuth-ub-img[rank="medium"] {
-        list-style-image: url("chrome://ssleuth/skin/btn-large-orange.png");
+    #sslrank-ub-img[rank="medium"] {
+        list-style-image: url("chrome://sslrank/skin/status-medium.png");
     }
-    #ssleuth-ub-img[rank="high"] {
-        list-style-image: url("chrome://ssleuth/skin/btn-large-blue.png");
+    #sslrank-ub-img[rank="high"] {
+        list-style-image: url("chrome://sslrank/skin/status-good.png");
     }
-    #ssleuth-ub-img[rank="vhigh"] {
-        list-style-image: url("chrome://ssleuth/skin/btn-large-green.png");
+    #sslrank-ub-img[rank="vhigh"] {
+        list-style-image: url("chrome://sslrank/skin/status-high.png");
     }
-    #ssleuth-tb-button[rank="default"] {
-        list-style-image: url("chrome://ssleuth/skin/btn-small-gray.png") !important;
+    #sslrank-tb-button[rank="default"] {
+        list-style-image: url("chrome://sslrank/skin/panel-clipboard.png") !important;
     }
-    #ssleuth-tb-button[rank="low"] {
-        list-style-image: url("chrome://ssleuth/skin/btn-small-red.png") !important;
+    #sslrank-tb-button[rank="low"] {
+        list-style-image: url("chrome://sslrank/skin/status-bad.png") !important;
     }
-    #ssleuth-tb-button[rank="medium"] {
-        list-style-image: url("chrome://ssleuth/skin/btn-small-orange.png") !important;
+    #sslrank-tb-button[rank="medium"] {
+        list-style-image: url("chrome://sslrank/skin/status-medium.png") !important;
     }
-    #ssleuth-tb-button[rank="high"] {
-        list-style-image: url("chrome://ssleuth/skin/btn-small-blue.png") !important;
+    #sslrank-tb-button[rank="high"] {
+        list-style-image: url("chrome://sslrank/skin/status-good.png") !important;
     }
-    #ssleuth-tb-button[rank="vhigh"] {
-        list-style-image: url("chrome://ssleuth/skin/btn-small-green.png") !important;
+    #sslrank-tb-button[rank="vhigh"] {
+        list-style-image: url("chrome://sslrank/skin/status-high.png") !important;
     }
-    #ssleuth-ub-img {
+    #sslrank-ub-img {
         width: 16px;
         height: auto;
         margin-left: 3px;
     }
-    #ssleuth-ub-rank {
+    #sslrank-ub-rank {
         /* font-weight: bold;*/
         -moz-appearance: none;
         border: medium none;
@@ -49,23 +49,23 @@ url(chrome://ssleuth/content/preferences.xul) {
         padding-left: 4px;
         padding-right: 2px;
     }
-    #ssleuth-ub-rank[rank="default"] {
+    #sslrank-ub-rank[rank="default"] {
         color: #5b696c;
     }
-    #ssleuth-ub-rank[rank="low"] {
+    #sslrank-ub-rank[rank="low"] {
         color: #5e0a0a;
     }
-    #ssleuth-ub-rank[rank="medium"] {
+    #sslrank-ub-rank[rank="medium"] {
         color: #e88119;
     }
-    #ssleuth-ub-rank[rank="high"] {
+    #sslrank-ub-rank[rank="high"] {
         color: #3f629e;
         /* color: #3e96c2; */
     }
-    #ssleuth-ub-rank[rank="vhigh"] {
+    #sslrank-ub-rank[rank="vhigh"] {
         color: #4f941c;
     }
-    #ssleuth-box-urlbar {
+    #sslrank-box-urlbar {
         background: -moz-linear-gradient(120deg, #d8dbdc, rgba(255, 255, 255, 0));
         margin-left: 5px;
         margin-right: 1px;
@@ -73,263 +73,263 @@ url(chrome://ssleuth/content/preferences.xul) {
     margin-bottom: 0px; 
      */
     }
-    #ssleuth-box-urlbar[rank="default"] {
+    #sslrank-box-urlbar[rank="default"] {
         background-image: -moz-linear-gradient(120deg, #d8dbdc, rgba(255, 255, 255, 0));
     }
-    #ssleuth-box-urlbar[rank="low"] {
+    #sslrank-box-urlbar[rank="low"] {
         background-image: -moz-linear-gradient(120deg, #cbb1b1, rgba(255, 255, 255, 0));
     }
-    #ssleuth-box-urlbar[rank="medium"] {
+    #sslrank-box-urlbar[rank="medium"] {
         background-image: -moz-linear-gradient(120deg, #f8eac8, rgba(255, 255, 255, 0));
     }
-    #ssleuth-box-urlbar[rank="high"] {
+    #sslrank-box-urlbar[rank="high"] {
         background-image: -moz-linear-gradient(120deg, #ced7e6, rgba(255, 255, 255, 0));
     }
-    #ssleuth-box-urlbar[rank="vhigh"] {
+    #sslrank-box-urlbar[rank="vhigh"] {
         background-image: -moz-linear-gradient(120deg, #d1e3c4, rgba(255, 255, 255, 0));
     }
-    #ssleuth-box-urlbar[rank="blank"],
-    #ssleuth-box-urlbar:hover {
+    #sslrank-box-urlbar[rank="blank"],
+    #sslrank-box-urlbar:hover {
         background: transparent;
     }
-    #ssleuth-ub-separator {
+    #sslrank-ub-separator {
         width: 1px;
         height: 15px;
         margin: 0 0px 0 5px;
         /* top right bottom left */
     }
-    #ssleuth-ub-separator[rank='default'] {
+    #sslrank-ub-separator[rank='default'] {
         background: -moz-linear-gradient(top, transparent 0%, #d8dbdc 15%, #d8dbdc 85%, transparent 100%);
     }
-    #ssleuth-ub-separator[rank='low'] {
+    #sslrank-ub-separator[rank='low'] {
         background: -moz-linear-gradient(top, transparent 0%, #cbb1b1 15%, #cbb1b1 85%, transparent 100%);
     }
-    #ssleuth-ub-separator[rank='medium'] {
+    #sslrank-ub-separator[rank='medium'] {
         background: -moz-linear-gradient(top, transparent 0%, #f8eac8 15%, #f8eac8 85%, transparent 100%);
     }
-    #ssleuth-ub-separator[rank='high'] {
+    #sslrank-ub-separator[rank='high'] {
         background: -moz-linear-gradient(top, transparent 0%, #ced7e6 15%, #ced7e6 85%, transparent 100%);
     }
-    #ssleuth-ub-separator[rank='vhigh'] {
+    #sslrank-ub-separator[rank='vhigh'] {
         background: -moz-linear-gradient(top, transparent 0%, #d1e3c4 15%, #d1e3c4 85%, transparent 100%);
     }
-    #urlbar[_ssleuthrank="default"] {}
-    #urlbar[_ssleuthrank="low"] {
+    #urlbar[_sslrankrank="default"] {}
+    #urlbar[_sslrankrank="low"] {
         background: -moz-linear-gradient(-88deg, rgba(255, 255, 255, 1) 28%, #cbb1b1) !important;
         color: #5e0a0a !important;
     }
-    #urlbar[_ssleuthrank="medium"] {
+    #urlbar[_sslrankrank="medium"] {
         background: -moz-linear-gradient(-88deg, rgba(255, 255, 255, 1) 28%, #f8eac8) !important;
         color: #e88119 !important;
     }
-    #urlbar[_ssleuthrank="high"] {
+    #urlbar[_sslrankrank="high"] {
         background: -moz-linear-gradient(-88deg, rgba(255, 255, 255, 1) 28%, #ced7e6) !important;
         color: #3f629e !important;
     }
-    #urlbar[_ssleuthrank="vhigh"] {
+    #urlbar[_sslrankrank="vhigh"] {
         background: -moz-linear-gradient(-88deg, rgba(255, 255, 255, 1) 28%, #d1e3c4) !important;
         color: #4f941c !important;
     }
     #urlbar:focus {}
-    #ssleuth-img-cipher-rank[status="low"] {
-        list-style-image: url("chrome://ssleuth/skin/status-bad.png");
+    #sslrank-img-cipher-rank[status="low"] {
+        list-style-image: url("chrome://sslrank/skin/status-bad.png");
     }
-    #ssleuth-img-cipher-rank[status="med"] {
-        list-style-image: url("chrome://ssleuth/skin/status-medium.png");
+    #sslrank-img-cipher-rank[status="med"] {
+        list-style-image: url("chrome://sslrank/skin/status-medium.png");
     }
-    #ssleuth-img-cipher-rank[status="high"] {
-        list-style-image: url("chrome://ssleuth/skin/status-high.png");
+    #sslrank-img-cipher-rank[status="high"] {
+        list-style-image: url("chrome://sslrank/skin/status-high.png");
     }
-    .ssleuth-star {
-        list-style-image: url("chrome://ssleuth/skin/starred-empty.png");
+    .sslrank-star {
+        list-style-image: url("chrome://sslrank/skin/starred-empty.png");
         width: 16px;
         height: auto;
     }
-    .ssleuth-star-half {
-        list-style-image: url("chrome://ssleuth/skin/starred-half.png");
+    .sslrank-star-half {
+        list-style-image: url("chrome://sslrank/skin/starred-half.png");
         width: 16px;
         height: auto;
     }
-    .ssleuth-star-full {
-        list-style-image: url("chrome://ssleuth/skin/starred.png");
+    .sslrank-star-full {
+        list-style-image: url("chrome://sslrank/skin/starred.png");
         width: 16px;
         height: auto;
     }
-    #ssleuth-img-p-f-secrecy[status="no"] {
-        list-style-image: url("chrome://ssleuth/skin/status-medium.png");
+    #sslrank-img-p-f-secrecy[status="no"] {
+        list-style-image: url("chrome://sslrank/skin/status-medium.png");
     }
-    #ssleuth-img-p-f-secrecy[status="yes"] {
-        list-style-image: url("chrome://ssleuth/skin/status-high.png");
+    #sslrank-img-p-f-secrecy[status="yes"] {
+        list-style-image: url("chrome://sslrank/skin/status-high.png");
     }
-    #ssleuth-img-ff-connection-status[state="Secure"] {
-        list-style-image: url("chrome://ssleuth/skin/status-good.png");
+    #sslrank-img-ff-connection-status[state="Secure"] {
+        list-style-image: url("chrome://sslrank/skin/status-good.png");
     }
-    #ssleuth-img-ff-connection-status[state="Insecure"] {
-        list-style-image: url("chrome://ssleuth/skin/status-bad.png");
+    #sslrank-img-ff-connection-status[state="Insecure"] {
+        list-style-image: url("chrome://sslrank/skin/status-bad.png");
     }
-    #ssleuth-img-ff-connection-status[state="Broken"] {
-        list-style-image: url("chrome://ssleuth/skin/status-bad.png");
+    #sslrank-img-ff-connection-status[state="Broken"] {
+        list-style-image: url("chrome://sslrank/skin/status-bad.png");
     }
-    #ssleuth-text-ff-connection-status-broken {
+    #sslrank-text-ff-connection-status-broken {
         color: #a02121;
     }
-    #ssleuth-img-cert-state[state="good"] {
-        list-style-image: url("chrome://ssleuth/skin/status-good.png");
+    #sslrank-img-cert-state[state="good"] {
+        list-style-image: url("chrome://sslrank/skin/status-good.png");
     }
-    #ssleuth-img-cert-state[state="bad"] {
-        list-style-image: url("chrome://ssleuth/skin/status-bad.png");
+    #sslrank-img-cert-state[state="bad"] {
+        list-style-image: url("chrome://sslrank/skin/status-bad.png");
     }
-    #ssleuth-img-tls-version[state="okay"] {
-        list-style-image: url("chrome://ssleuth/skin/status-good.png");
+    #sslrank-img-tls-version[state="okay"] {
+        list-style-image: url("chrome://sslrank/skin/status-good.png");
     }
-    #ssleuth-img-tls-version[state="bad"] {
-        list-style-image: url("chrome://ssleuth/skin/status-bad.png");
+    #sslrank-img-tls-version[state="bad"] {
+        list-style-image: url("chrome://sslrank/skin/status-bad.png");
     }
-    #ssleuth-img-tls-version[state="med"] {
-        list-style-image: url("chrome://ssleuth/skin/status-medium.png");
+    #sslrank-img-tls-version[state="med"] {
+        list-style-image: url("chrome://sslrank/skin/status-medium.png");
     }
-    #ssleuth-text-cert-extended-validation[ev="Yes"] {
+    #sslrank-text-cert-extended-validation[ev="Yes"] {
         color: #28802c;
         font-weight: bold;
     }
-    #ssleuth-text-cert-extended-validation[ev="No"] {
+    #sslrank-text-cert-extended-validation[ev="No"] {
         /* font-size: 10px; */
     }
-    #ssleuth-text-cert-common-name {
+    #sslrank-text-cert-common-name {
         font-weight: bold;
     }
-    #ssleuth-text-cert-org {
+    #sslrank-text-cert-org {
         font-weight: bold;
     }
-    #ssleuth-text-cert-issuer-org {
+    #sslrank-text-cert-issuer-org {
         font-weight: bold;
     }
-    #ssleuth-text-cert-validity[valid="true"] {}
-    #ssleuth-text-cert-validity[valid="false"] {
+    #sslrank-text-cert-validity[valid="true"] {}
+    #sslrank-text-cert-validity[valid="false"] {
         color: #a02121;
         font-weight: bold;
     }
-    #ssleuth-text-cert-pub-key[secure='true'] {}
-    #ssleuth-text-cert-pub-key[secure='false'] {
+    #sslrank-text-cert-pub-key[secure='true'] {}
+    #sslrank-text-cert-pub-key[secure='false'] {
         color: #a02121;
         font-weight: bold;
     }
-    #ssleuth-text-cert-domain-mismatch {
+    #sslrank-text-cert-domain-mismatch {
         color: #a02121;
         /* font-weight: bold;*/
     }
-    #ssleuth-text-cipher-rank-numeric {
+    #sslrank-text-cipher-rank-numeric {
         font-weight: bold;
     }
-    .ssleuth-text-body-rating {
+    .sslrank-text-body-rating {
         color: #686868;
         font-size: 0.75em;
     }
-    #ssleuth-text-domains-rating-separator,
-    #ssleuth-text-domains-rating-numeric {
+    #sslrank-text-domains-rating-separator,
+    #sslrank-text-domains-rating-numeric {
         font-size: 0.85em;
         color: #686868;
         /* font-weight: bold;*/
     }
-    #ssleuth-img-domains-rating {
+    #sslrank-img-domains-rating {
         opacity: 0.8;
     }
-    #ssleuth-img-domains-rating[rank="default"] {
+    #sslrank-img-domains-rating[rank="default"] {
         list-style-image: none;
     }
-    #ssleuth-img-domains-rating[rank="low"] {
-        list-style-image: url("chrome://ssleuth/skin/status-bad.png");
+    #sslrank-img-domains-rating[rank="low"] {
+        list-style-image: url("chrome://sslrank/skin/status-bad.png");
     }
-    #ssleuth-img-domains-rating[rank="medium"] {
-        list-style-image: url("chrome://ssleuth/skin/status-medium.png");
+    #sslrank-img-domains-rating[rank="medium"] {
+        list-style-image: url("chrome://sslrank/skin/status-medium.png");
     }
-    #ssleuth-img-domains-rating[rank="high"] {
-        list-style-image: url("chrome://ssleuth/skin/status-good.png");
+    #sslrank-img-domains-rating[rank="high"] {
+        list-style-image: url("chrome://sslrank/skin/status-good.png");
     }
-    #ssleuth-img-domains-rating[rank="vhigh"] {
-        list-style-image: url("chrome://ssleuth/skin/status-high.png");
+    #sslrank-img-domains-rating[rank="vhigh"] {
+        list-style-image: url("chrome://sslrank/skin/status-high.png");
     }
-    #ssleuth-img-http-omg {
-        list-style-image: url("chrome://ssleuth/skin/status-bad.png");
+    #sslrank-img-http-omg {
+        list-style-image: url("chrome://sslrank/skin/status-bad.png");
     }
-    #ssleuth-img-panel-pref-icon {
-        list-style-image: url("chrome://ssleuth/skin/panel-pref.png");
+    #sslrank-img-panel-pref-icon {
+        list-style-image: url("chrome://sslrank/skin/panel-pref.png");
         margin-top: 2px;
         margin-bottom: 2px;
         margin-left: 5px;
         opacity: 0.2;
     }
-    #ssleuth-img-panel-pref-icon:hover {
+    #sslrank-img-panel-pref-icon:hover {
         opacity: 0.5;
     }
-    #ssleuth-img-panel-clipboard {
-        list-style-image: url("chrome://ssleuth/skin/panel-clipboard.png");
+    #sslrank-img-panel-clipboard {
+        list-style-image: url("chrome://sslrank/skin/panel-clipboard.png");
         margin-top: 2px;
         margin-bottom: 2px;
         opacity: 0.2;
     }
-    #ssleuth-img-panel-clipboard:hover {
+    #sslrank-img-panel-clipboard:hover {
         opacity: 0.5;
     }
-    #ssleuth-img-panel-clipboard:active {
+    #sslrank-img-panel-clipboard:active {
         opacity: 1.0;
     }
-    #ssleuth-text-cipher-suite-kxchange-notes,
-    #ssleuth-text-cipher-suite-auth-notes,
-    #ssleuth-text-cipher-suite-bulkcipher-notes,
-    #ssleuth-text-cipher-suite-hmac-notes {
+    #sslrank-text-cipher-suite-kxchange-notes,
+    #sslrank-text-cipher-suite-auth-notes,
+    #sslrank-text-cipher-suite-bulkcipher-notes,
+    #sslrank-text-cipher-suite-hmac-notes {
         color: #686868;
     }
-    .ssleuth-img-state-small {
+    .sslrank-img-state-small {
         margin-top: 0.12em;
         /* width: 0.95em;*/
         width: 12px;
     }
-    .ssleuth-img-state-medium {
+    .sslrank-img-state-medium {
         margin-top: 0.14em;
         /* width: 1em;*/
         width: 13px;
     }
-    .ssleuth-img-state-large {
+    .sslrank-img-state-large {
         margin-top: 0.25em;
         /* width: 1.1em; */
         width: 14px;
     }
-    .ssleuth-text-body-small {
+    .sslrank-text-body-small {
         font-size: 0.85em;
     }
-    .ssleuth-text-title-small {
+    .sslrank-text-title-small {
         /* Default ff font */
         /* font-weight: bold; */
     }
-    .ssleuth-text-body-medium {
+    .sslrank-text-body-medium {
         font-size: 0.95em;
     }
-    .ssleuth-text-title-medium {
+    .sslrank-text-title-medium {
         /* font-size: 1.1em;  */
         font-weight: bold
     }
-    .ssleuth-text-body-large {
+    .sslrank-text-body-large {
         font-size: 1.03em;
     }
-    .ssleuth-text-title-large {
+    .sslrank-text-title-large {
         font-size: 1.2em;
     }
-    .ssleuth-pref-text {
+    .sslrank-pref-text {
         /* width: -moz-calc(50% - 20px); */
         /* white-space: pre-wrap;*/
         /* width: 70%; */
     }
-    #ssleuth-pref-contentbox {
+    #sslrank-pref-contentbox {
         margin-left: 15px;
         margin-right: 15px;
         margin-bottom: 15px;
     }
-    .ssleuth-pref-view-container {
+    .sslrank-pref-view-container {
         font-size: 100%;
         padding: 0 2em 2em;
     }
-    .ssleuth-pref-main-content {
+    .sslrank-pref-main-content {
         background-color: -moz-field;
         border: 1px solid threedshadow;
         border-radius: 5px;
@@ -337,10 +337,10 @@ url(chrome://ssleuth/content/preferences.xul) {
         overflow: hidden;
         padding-top: 15px;
     }
-    #ssleuth-pref-scroll-box {
+    #sslrank-pref-scroll-box {
         overflow: auto;
     }
-    #ssleuth-pref-categories {
+    #sslrank-pref-categories {
         -moz-appearance: none;
         -moz-margin-end: -1px;
         background-color: rgba(0, 0, 0, 0);
@@ -349,7 +349,7 @@ url(chrome://ssleuth/content/preferences.xul) {
         position: relative;
         width: 230px;
     }
-    .ssleuth-pref-category {
+    .sslrank-pref-category {
         -moz-appearance: none;
         border-width: 1px;
         -moz-border-end-width: 0;
@@ -362,15 +362,15 @@ url(chrome://ssleuth/content/preferences.xul) {
         color: WindowText;
         font-size: 133%;
     }
-    .ssleuth-pref-category:-moz-locale-dir(ltr) {
+    .sslrank-pref-category:-moz-locale-dir(ltr) {
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
     }
-    .ssleuth-pref-category:-moz-locale-dir(rtl) {
+    .sslrank-pref-category:-moz-locale-dir(rtl) {
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
     }
-    .ssleuth-pref-category[disabled] {
+    .sslrank-pref-category[disabled] {
         border-top: 0;
         border-bottom: 0;
         height: 0;
@@ -378,22 +378,22 @@ url(chrome://ssleuth/content/preferences.xul) {
         transition-property: height, opacity;
         transition-duration: 1s, 0.8s;
     }
-    .ssleuth-pref-category:not([disabled]) {
+    .sslrank-pref-category:not([disabled]) {
         height: 45px;
         transition-property: height, opacity;
         transition-duration: 1s, 0.8s;
     }
-    .ssleuth-pref-category[selected] {
+    .sslrank-pref-category[selected] {
         background-color: -moz-field;
         color: -moz-fieldtext;
         border-color: ThreeDShadow;
     }
-    .ssleuth-paneltab-box {
+    .sslrank-paneltab-box {
         margin-top: 5px;
         ;
         margin-bottom: 5px;
     }
-    .ssleuth-paneltab-tab {
+    .sslrank-paneltab-tab {
         -moz-appearance: none;
         border-width: 1px;
         /* -moz-border-end-width: 0;*/
@@ -411,24 +411,24 @@ url(chrome://ssleuth/content/preferences.xul) {
         border-top-left-radius: 2px;
         border-top-right-radius: 2px;
     }
-    .ssleuth-paneltab-tab[_selected="false"] {
+    .sslrank-paneltab-tab[_selected="false"] {
         border-top: none;
         border-left: none;
         border-right: none;
     }
-    .ssleuth-paneltab-tab[_selected="true"] {
+    .sslrank-paneltab-tab[_selected="true"] {
         /* background-color: -moz-field;*/
         color: -moz-fieldtext;
         border-width: 1px;
         border-style: solid;
         border-bottom: none;
     }
-    .ssleuth-paneltab-tab:hover {
+    .sslrank-paneltab-tab:hover {
         color: -moz-fieldtext;
         /* border-width: 1px;
 	border-style: solid; */
     }
-    #ssleuth-paneltab-domains-list {
+    #sslrank-paneltab-domains-list {
         -moz-appearance: none;
         /* -moz-margin-end: -1px; */
         background-color: rgba(0, 0, 0, 0);
@@ -437,7 +437,7 @@ url(chrome://ssleuth/content/preferences.xul) {
         /* margin-top: 40px;*/
         /* position: relative;*/
     }
-    .ssleuth-paneltab-domains-item {
+    .sslrank-paneltab-domains-item {
         /* margin-bottom: 3px;*/
         /* border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;*/
@@ -448,34 +448,34 @@ url(chrome://ssleuth/content/preferences.xul) {
         border-left: none;
         border-right: none;
     }
-    .ssleuth-paneltab-domains-item[rank="default"] {
+    .sslrank-paneltab-domains-item[rank="default"] {
         /* background: #d8dbdc; */
         background: transparent;
     }
-    .ssleuth-paneltab-domains-item[rank="low"] {
+    .sslrank-paneltab-domains-item[rank="low"] {
         background: #cbb1b1;
         color: #000;
     }
-    .ssleuth-paneltab-domains-item[rank="medium"] {
+    .sslrank-paneltab-domains-item[rank="medium"] {
         background: #f8eac8;
         color: #000;
     }
-    .ssleuth-paneltab-domains-item[rank="high"] {
+    .sslrank-paneltab-domains-item[rank="high"] {
         background: #ced7e6;
         color: #000;
     }
-    .ssleuth-paneltab-domains-item[rank="vhigh"] {
+    .sslrank-paneltab-domains-item[rank="vhigh"] {
         background: #d1e3c4;
         color: #000;
     }
     /*Fix Toolbar button rank image */
-    .ssleuth-panel-cipher-menulist {
+    .sslrank-panel-cipher-menulist {
         list-style-image: none;
     }
-    #ssleuth-paneltab-ciphers-btn-reset {
+    #sslrank-paneltab-ciphers-btn-reset {
         list-style-image: none;
     }
-    #ssleuth-paneltab-ciphers-btn-custom {
+    #sslrank-paneltab-ciphers-btn-custom {
         list-style-image: none;
     }
 }

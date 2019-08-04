@@ -50,7 +50,7 @@ var utils = (function () {
         try {
             // TODO : flush bundle, and create new bundle
             var bundle = Services.strings
-                .createBundle('chrome://ssleuth/locale/panel.properties');
+                .createBundle('chrome://sslrank/locale/panel.properties');
             return bundle.GetStringFromName(name);
         } catch (e) {
             return name;
@@ -73,7 +73,7 @@ var utils = (function () {
 }());
 
 var log = (function () {
-    var logger = Log.repository.getLogger('[SSleuth] '),
+    var logger = Log.repository.getLogger('[SSLRank] '),
         appender = new Log.ConsoleAppender(new Log.BasicFormatter());
     logger.level = Log.Level.Debug;
     logger.addAppender(appender);

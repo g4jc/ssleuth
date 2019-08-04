@@ -1,145 +1,145 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/global.css"?>
-<?xml-stylesheet href="chrome://ssleuth/skin/ssleuth.css" type="text/css"?>
-<!DOCTYPE window SYSTEM "chrome://ssleuth/locale/preferences.dtd">
-<page id="ssleuth-preferences" 
+<?xml-stylesheet href="chrome://sslrank/skin/sslrank.css" type="text/css"?>
+<!DOCTYPE window SYSTEM "chrome://sslrank/locale/preferences.dtd">
+<page id="sslrank-preferences"
 							xmlns:html="http://www.w3.org/1999/xhtml"
 							xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
-							title="&ssleuth.pref.title.label;"
+							title="&sslrank.pref.title.label;"
 							onload="">
 	<script type="application/javascript"
-				  src="chrome://ssleuth/content/preferences-ui.js"/>
+				  src="chrome://sslrank/content/preferences-ui.js"/>
 
 	<hbox align="center" 
 				style="margin-bottom: 50px;"/>
-	<hbox flex="1" id="ssleuth-pref-contentbox">
-		<listbox id="ssleuth-pref-categories"
+	<hbox flex="1" id="sslrank-pref-contentbox">
+		<listbox id="sslrank-pref-categories"
 						selectedIndex = "0"
 						onselect="document.getElementById('viewport-panel').selectedIndex
 												= this.selectedIndex">
-			<listitem class="ssleuth-pref-category"
+			<listitem class="sslrank-pref-category"
 					image=""
-					label="&ssleuth.pref.tab.ssleuthui;"
+					label="&sslrank.pref.tab.sslrankui;"
 					selected="true"/>
-			<listitem class="ssleuth-pref-category"
+			<listitem class="sslrank-pref-category"
 					image=""
-					label="&ssleuth.pref.tab.ranking;"/>
-			<listitem class="ssleuth-pref-category"
+					label="&sslrank.pref.tab.ranking;"/>
+			<listitem class="sslrank-pref-category"
 					image=""
-					label="&ssleuth.pref.tab.ciphersuites;"/>
-			<listitem class="ssleuth-pref-category"
+					label="&sslrank.pref.tab.ciphersuites;"/>
+			<listitem class="sslrank-pref-category"
 					image=""
-					label="&ssleuth.pref.tab.about;"/>
+					label="&sslrank.pref.tab.about;"/>
 		</listbox>
 
-		<box flex="1" class="ssleuth-pref-main-content">
+		<box flex="1" class="sslrank-pref-main-content">
 			<deck flex="1" id="viewport-panel">
-				<scrollbox id="ssleuth-pref-scroll-box" 
+				<scrollbox id="sslrank-pref-scroll-box"
 										flex="1" orient="vertical" tabindex="0"
 										active="true">
-				<vbox class="ssleuth-pref-view-container">
+				<vbox class="sslrank-pref-view-container">
 					<groupbox>
-						<caption label="&ssleuth.pref.ui.notifier.label;"/>
-						<radiogroup id="ssleuth-pref-notifier-location" 
+						<caption label="&sslrank.pref.ui.notifier.label;"/>
+						<radiogroup id="sslrank-pref-notifier-location"
 							orient="horizontal">
-							<radio id="ssleuth-notifier-urlbar" 
-									label="&ssleuth.pref.ui.notifier.urlbar;"
+							<radio id="sslrank-notifier-urlbar"
+									label="&sslrank.pref.ui.notifier.urlbar;"
 									value="0"/>
-							<radio id="ssleuth-notifier-toolbar"
-									label="&ssleuth.pref.ui.notifier.toolbar;"
+							<radio id="sslrank-notifier-toolbar"
+									label="&sslrank.pref.ui.notifier.toolbar;"
 									value="1"/>
 						</radiogroup>
 					</groupbox>
 					<groupbox>
-						<caption label="&ssleuth.pref.ui.fontsize;"/>
-						<radiogroup id="ssleuth-pref-panel-fontsize"
+						<caption label="&sslrank.pref.ui.fontsize;"/>
+						<radiogroup id="sslrank-pref-panel-fontsize"
 							orient="horizontal"
 							oncommand="">
 							<hbox align="baseline">
-								<radio id="ssleuth-panel-fontsize-small" 
+								<radio id="sslrank-panel-fontsize-small"
 										value="0" 
-										label="&ssleuth.pref.ui.fontsize.default;"/>
+										label="&sslrank.pref.ui.fontsize.default;"/>
 								<hbox style="background-color:-moz-dialog" align="baseline">
-									<label value="&ssleuth.pref.ui.fontsize.header;"
-													control="ssleuth-panel-fontsize-small"
-													class="ssleuth-text-title-small"/>
-									<label value="&ssleuth.pref.ui.fontsize.body;"
-													control="ssleuth-panel-fontsize-small"
-													class="ssleuth-text-body-small"/>
+									<label value="&sslrank.pref.ui.fontsize.header;"
+													control="sslrank-panel-fontsize-small"
+													class="sslrank-text-title-small"/>
+									<label value="&sslrank.pref.ui.fontsize.body;"
+													control="sslrank-panel-fontsize-small"
+													class="sslrank-text-body-small"/>
 								</hbox>
 							</hbox>
 							<hbox align="baseline">
-								<radio id="ssleuth-panel-fontsize-medium" 
+								<radio id="sslrank-panel-fontsize-medium"
 										value="1" 
 										style="margin-left: 15px;"
-										label="&ssleuth.pref.ui.fontsize.medium;"/>
+										label="&sslrank.pref.ui.fontsize.medium;"/>
 								<hbox style="background-color:-moz-dialog" align="baseline">
-									<label value="&ssleuth.pref.ui.fontsize.header;"
-													control="ssleuth-panel-fontsize-medium"
-													class="ssleuth-text-title-medium"/>
-									<label value="&ssleuth.pref.ui.fontsize.body;"
-													control="ssleuth-panel-fontsize-medium"
-													class="ssleuth-text-body-medium"/>
+									<label value="&sslrank.pref.ui.fontsize.header;"
+													control="sslrank-panel-fontsize-medium"
+													class="sslrank-text-title-medium"/>
+									<label value="&sslrank.pref.ui.fontsize.body;"
+													control="sslrank-panel-fontsize-medium"
+													class="sslrank-text-body-medium"/>
 								</hbox>
 							</hbox>
 							<hbox align="baseline">
-								<radio id="ssleuth-panel-fontsize-large"
+								<radio id="sslrank-panel-fontsize-large"
 										value="2"
 										style="margin-left: 15px;"
-										label="&ssleuth.pref.ui.fontsize.large;"/>
+										label="&sslrank.pref.ui.fontsize.large;"/>
 								<hbox style="background-color:-moz-dialog" align="baseline">
-									<label value="&ssleuth.pref.ui.fontsize.header;"
-													control="ssleuth-panel-fontsize-large"
-													class="ssleuth-text-title-large"/>
-									<label value="&ssleuth.pref.ui.fontsize.body;"
-													control="ssleuth-panel-fontsize-large"
-													class="ssleuth-text-body-large"/>
+									<label value="&sslrank.pref.ui.fontsize.header;"
+													control="sslrank-panel-fontsize-large"
+													class="sslrank-text-title-large"/>
+									<label value="&sslrank.pref.ui.fontsize.body;"
+													control="sslrank-panel-fontsize-large"
+													class="sslrank-text-body-large"/>
 								</hbox>
 							</hbox>
 						</radiogroup>
 					</groupbox>
 					<groupbox>
-							<caption label="&ssleuth.pref.panel.panelinfo;"/>
-							<checkbox id="ssleuth-pref-show-cs-key-exchange"
-									label="&ssleuth.pref.panel.ciphersuite; &ssleuth.pref.panel.keyexchange;"/>
-							<checkbox id="ssleuth-pref-show-cs-authentication"
-									label="&ssleuth.pref.panel.ciphersuite; &ssleuth.pref.panel.authentication;"/>
-							<checkbox id="ssleuth-pref-show-cs-bulk-cipher"
-									label="&ssleuth.pref.panel.ciphersuite; &ssleuth.pref.panel.bulkcipher;"/>
-							<checkbox id="ssleuth-pref-show-cs-hmac"
-									label="&ssleuth.pref.panel.ciphersuite; &ssleuth.pref.panel.hmac;"/>
+							<caption label="&sslrank.pref.panel.panelinfo;"/>
+							<checkbox id="sslrank-pref-show-cs-key-exchange"
+									label="&sslrank.pref.panel.ciphersuite; &sslrank.pref.panel.keyexchange;"/>
+							<checkbox id="sslrank-pref-show-cs-authentication"
+									label="&sslrank.pref.panel.ciphersuite; &sslrank.pref.panel.authentication;"/>
+							<checkbox id="sslrank-pref-show-cs-bulk-cipher"
+									label="&sslrank.pref.panel.ciphersuite; &sslrank.pref.panel.bulkcipher;"/>
+							<checkbox id="sslrank-pref-show-cs-hmac"
+									label="&sslrank.pref.panel.ciphersuite; &sslrank.pref.panel.hmac;"/>
 
-							<checkbox id="ssleuth-pref-show-cert-validity"
-									label="&ssleuth.pref.panel.certificate; &ssleuth.pref.panel.validity;"/>
-							<checkbox id="ssleuth-pref-show-cert-validity-time"
-									label="&ssleuth.pref.panel.certificate; &ssleuth.pref.panel.validitytime;"/>
-							<checkbox id="ssleuth-pref-show-cert-fingerprint"
-									label="&ssleuth.pref.panel.certificate; &ssleuth.pref.panel.fingerprint;"/>
-							<!-- checkbox id="ssleuth-pref-show-urlbar-icon"
+							<checkbox id="sslrank-pref-show-cert-validity"
+									label="&sslrank.pref.panel.certificate; &sslrank.pref.panel.validity;"/>
+							<checkbox id="sslrank-pref-show-cert-validity-time"
+									label="&sslrank.pref.panel.certificate; &sslrank.pref.panel.validitytime;"/>
+							<checkbox id="sslrank-pref-show-cert-fingerprint"
+									label="&sslrank.pref.panel.certificate; &sslrank.pref.panel.fingerprint;"/>
+							<!-- checkbox id="sslrank-pref-show-urlbar-icon"
 									label="Certificate : Show icon in URL bar notifier"/-->
 							<hbox>
-								<button label="&ssleuth.pref.ui.button.reset;" 
-												id="ssleuth-pref-show-panel-info-reset"/>
+								<button label="&sslrank.pref.ui.button.reset;"
+												id="sslrank-pref-show-panel-info-reset"/>
 							</hbox>
 					</groupbox>
 					<groupbox>
-						<caption label="&ssleuth.pref.ui.urlbar;"/>
-            <checkbox id="ssleuth-pref-show-urlbar-gradient"
-                label="&ssleuth.pref.ui.urlbar.colorize;" />
-            <checkbox id="ssleuth-pref-show-notifier-gradient"
-                label="&ssleuth.pref.ui.notifier.colorize;" />
+						<caption label="&sslrank.pref.ui.urlbar;"/>
+            <checkbox id="sslrank-pref-show-urlbar-gradient"
+                label="&sslrank.pref.ui.urlbar.colorize;" />
+            <checkbox id="sslrank-pref-show-notifier-gradient"
+                label="&sslrank.pref.ui.notifier.colorize;" />
  					</groupbox>
 
 					</vbox>
 				</scrollbox>
 
-				<scrollbox id="ssleuth-pref-scroll-box" 
+				<scrollbox id="sslrank-pref-scroll-box"
 										flex="1" orient="vertical" tabindex="0"
 										active="true">
-				<vbox class="ssleuth-pref-view-container">
+				<vbox class="sslrank-pref-view-container">
 					<groupbox>
-						<caption label="&ssleuth.pref.rating.overall;"/>
-						<description value="&ssleuth.pref.rating.overall.desc;"/> 
+						<caption label="&sslrank.pref.rating.overall;"/>
+						<description value="&sslrank.pref.rating.overall.desc;"/>
 						<vbox align="baseline">
 							<grid equalsize="always" align="baseline"
 										style="background-color:-moz-dialog; height: 2.0em;">
@@ -154,50 +154,50 @@
 								</columns>
 								<rows>
 									<row>
-										<label value="&ssleuth.pref.rating.ciphersuite;" flex="1"/>
-										<label value="&ssleuth.pref.rating.forwardsecrecy;" flex="1"/>
-										<label value="&ssleuth.pref.rating.extendedvalidation;" flex="1"/>
-										<label value="&ssleuth.pref.rating.connectionstatus;" flex="1"/>
-										<label value="&ssleuth.pref.rating.certstate;" flex="1"/>
-										<label value="&ssleuth.pref.rating.signaturealg;" flex="1"/>
-										<label value="&ssleuth.pref.rating.total;" flex="1"/>
+										<label value="&sslrank.pref.rating.ciphersuite;" flex="1"/>
+										<label value="&sslrank.pref.rating.forwardsecrecy;" flex="1"/>
+										<label value="&sslrank.pref.rating.extendedvalidation;" flex="1"/>
+										<label value="&sslrank.pref.rating.connectionstatus;" flex="1"/>
+										<label value="&sslrank.pref.rating.certstate;" flex="1"/>
+										<label value="&sslrank.pref.rating.signaturealg;" flex="1"/>
+										<label value="&sslrank.pref.rating.total;" flex="1"/>
 									</row>
 									<row align='baseline'>
 										<box flex="1">
 											<textbox width="50" type="number" 
-												id="ssleuth-pref-cipher-suite-weight" decimalplaces="1"/>
+												id="sslrank-pref-cipher-suite-weight" decimalplaces="1"/>
 										</box>
 										<box flex="1">
 											<textbox width="50" type="number" 
-												id="ssleuth-pref-pfs-weight" decimalplaces="1"/>
+												id="sslrank-pref-pfs-weight" decimalplaces="1"/>
 										</box>
 										<box flex="1">
 											<textbox width="50" type="number" 
-												id="ssleuth-pref-ev-weight" decimalplaces="1"/>
+												id="sslrank-pref-ev-weight" decimalplaces="1"/>
 										</box>
 										<box flex="1">
 											<textbox width="50" type="number" 
-												id="ssleuth-pref-ffstatus-weight" decimalplaces="1"/>
+												id="sslrank-pref-ffstatus-weight" decimalplaces="1"/>
 										</box>
 										<box flex="1">
 											<textbox width="50" type="number" 
-												id="ssleuth-pref-certstate-weight" decimalplaces="1"/>
+												id="sslrank-pref-certstate-weight" decimalplaces="1"/>
 										</box>
 										<box flex="1">
 											<textbox width="50" type="number" 
-												id="ssleuth-pref-signature-weight" decimalplaces="1"/>
+												id="sslrank-pref-signature-weight" decimalplaces="1"/>
 										</box>
-										<label flex="1" id="ssleuth-pref-cx-rating-total" style="font-weight:bold"/>
+										<label flex="1" id="sslrank-pref-cx-rating-total" style="font-weight:bold"/>
 									</row>
 								</rows>
 							</grid>
 							<description value=""/>
 							<hbox>
-								<button label="&ssleuth.pref.ui.button.apply;" 
-												id="ssleuth-pref-cx-ratings-apply"
+								<button label="&sslrank.pref.ui.button.apply;"
+												id="sslrank-pref-cx-ratings-apply"
 												/>
-								<button label="&ssleuth.pref.ui.button.reset;"
-												id="ssleuth-pref-cx-ratings-reset"
+								<button label="&sslrank.pref.ui.button.reset;"
+												id="sslrank-pref-cx-ratings-reset"
 												/>
 							</hbox>
 					</vbox>
@@ -205,8 +205,8 @@
 				<description value=""/>
 
 				<groupbox>
-					<caption label="&ssleuth.pref.rating.ciphersuite;"/>
-					<description value="&ssleuth.pref.rating.ciphersuite.desc;"/> 
+					<caption label="&sslrank.pref.rating.ciphersuite;"/>
+					<description value="&sslrank.pref.rating.ciphersuite.desc;"/>
 					<vbox align="baseline">
 						<grid equalsize="always" align="baseline"
 									style="background-color:-moz-dialog; height: 2.0em;">
@@ -218,25 +218,25 @@
 							</columns>
 							<rows>
 								<row>
-									<label value="&ssleuth.pref.rating.keyexchange;" flex="1"/>
-									<label value="&ssleuth.pref.rating.bulkcipher;" flex="1"/>
-									<label value="&ssleuth.pref.rating.hmac;" flex="1"/>
-									<label value="&ssleuth.pref.rating.total;" flex="1"/>
+									<label value="&sslrank.pref.rating.keyexchange;" flex="1"/>
+									<label value="&sslrank.pref.rating.bulkcipher;" flex="1"/>
+									<label value="&sslrank.pref.rating.hmac;" flex="1"/>
+									<label value="&sslrank.pref.rating.total;" flex="1"/>
 								</row>
 								<row align='baseline'>
 									<box flex="1">
 										<textbox width="50" type="number" 
-											id="ssleuth-pref-cs-kx-weight" decimalplaces="1"/>
+											id="sslrank-pref-cs-kx-weight" decimalplaces="1"/>
 									</box>
 									<box flex="1">
 										<textbox width="50" type="number" 
-											id="ssleuth-pref-cs-cipher-weight" decimalplaces="1"/>
+											id="sslrank-pref-cs-cipher-weight" decimalplaces="1"/>
 									</box>
 									<box flex="1">
 										<textbox width="50" type="number" 
-											id="ssleuth-pref-cs-hmac-weight" decimalplaces="1"/>
+											id="sslrank-pref-cs-hmac-weight" decimalplaces="1"/>
 									</box>
-									<label flex="1" id="ssleuth-pref-cs-rating-total" style="font-weight:bold;"/>
+									<label flex="1" id="sslrank-pref-cs-rating-total" style="font-weight:bold;"/>
 								</row>
 							</rows>
 						</grid>
@@ -244,11 +244,11 @@
 					</vbox>
 
 					<hbox>
-						<button label="&ssleuth.pref.ui.button.apply;"
-										id="ssleuth-pref-cs-ratings-apply"
+						<button label="&sslrank.pref.ui.button.apply;"
+										id="sslrank-pref-cs-ratings-apply"
 										/>
-						<button label="&ssleuth.pref.ui.button.reset;"
-										id="ssleuth-pref-cs-ratings-reset"
+						<button label="&sslrank.pref.ui.button.reset;"
+										id="sslrank-pref-cs-ratings-reset"
 										/>
 					</hbox>
 
@@ -257,121 +257,122 @@
 				</vbox>
 				</scrollbox>
 
-				<scrollbox id="ssleuth-pref-scroll-box" 
+				<scrollbox id="sslrank-pref-scroll-box"
 										flex="1" orient="vertical" tabindex="0"
 										active="true">
-				<vbox class="ssleuth-pref-view-container">
+				<vbox class="sslrank-pref-view-container">
 
 					<groupbox>
-						<caption label="&ssleuth.pref.ciphersuites.title;"/>
-						<description value="&ssleuth.pref.ciphersuites.desc1;"/>
-						<description value="&ssleuth.pref.ciphersuites.desc2;" />
+						<caption label="&sslrank.pref.ciphersuites.title;"/>
+						<description value="&sslrank.pref.ciphersuites.desc1;"/>
+						<description value="&sslrank.pref.ciphersuites.desc2;" />
 
 						<hbox flex="1">
-							<richlistbox id="ssleuth-pref-mng-cs-entrybox" flex="1">
-								<listheader equalsize="always" id="ssleuth-pref-mng-cs-header"
+							<richlistbox id="sslrank-pref-mng-cs-entrybox" flex="1">
+								<listheader equalsize="always" id="sslrank-pref-mng-cs-header"
 										style="border: 0; padding: 0; -moz-appearance: none;">
-									<treecol label="&ssleuth.pref.ciphersuites.name;" flex="1"/>
-									<treecol label="&ssleuth.pref.ciphersuites.state;" flex="1"/>
+									<treecol label="&sslrank.pref.ciphersuites.name;" flex="1"/>
+									<treecol label="&sslrank.pref.ciphersuites.state;" flex="1"/>
 								</listheader>
 							</richlistbox>
 
 							<vbox flex="1">
-								<deck id="ssleuth-pref-mng-cs-deck" flex="1"/>	
+								<deck id="sslrank-pref-mng-cs-deck" flex="1"/>
 							</vbox>
 						</hbox>
 
 						<hbox>
 							<hbox>
-								<button label="&ssleuth.pref.ui.button.new;" 
-												id="ssleuth-pref-mng-cs-entry-new"
+								<button label="&sslrank.pref.ui.button.new;"
+												id="sslrank-pref-mng-cs-entry-new"
 												/>
-								<button label="&ssleuth.pref.ui.button.edit;" 
-												id="ssleuth-pref-mng-cs-entry-edit"
+								<button label="&sslrank.pref.ui.button.edit;"
+												id="sslrank-pref-mng-cs-entry-edit"
 												/>
-								<button label="&ssleuth.pref.ui.button.remove;" 
-												id="ssleuth-pref-mng-cs-entry-remove"
+								<button label="&sslrank.pref.ui.button.remove;"
+												id="sslrank-pref-mng-cs-entry-remove"
 												/>
 							</hbox>
-							<hbox id="ssleuth-pref-mng-cs-edit-buttons" hidden="true">
-								<button label="&ssleuth.pref.ui.button.apply;"
-												id="ssleuth-pref-mng-cs-edit-apply"
+							<hbox id="sslrank-pref-mng-cs-edit-buttons" hidden="true">
+								<button label="&sslrank.pref.ui.button.apply;"
+												id="sslrank-pref-mng-cs-edit-apply"
 												/>
-								<button label="&ssleuth.pref.ui.button.cancel;"
-												id="ssleuth-pref-mng-cs-edit-cancel"
+								<button label="&sslrank.pref.ui.button.cancel;"
+												id="sslrank-pref-mng-cs-edit-cancel"
 												/>
 							</hbox>
 						</hbox>
 					</groupbox>
 					<groupbox>
-						<caption label="&ssleuth.pref.ciphersuites.note.title;"/>
+						<caption label="&sslrank.pref.ciphersuites.note.title;"/>
 						<label class="text-link" 
-														href="https://github.com/sibiantony/ssleuth/wiki/Cipher-suites-enabling-and-disabling"
-														value="&ssleuth.pref.ciphersuites.wiki;"/>
+														href="https://pagure.io/sslrank/blob/master/f/docs/Cipher-suites-enabling-and-disabling.md"
+														value="&sslrank.pref.ciphersuites.wiki;"/>
 						<html:ul>
-							<html:li>&ssleuth.pref.ciphersuites.note.1;</html:li>
-							<html:li>&ssleuth.pref.ciphersuites.note.2;</html:li>
-							<html:li>&ssleuth.pref.ciphersuites.note.3;</html:li>
-							<html:li>&ssleuth.pref.ciphersuites.note.4;</html:li>
-							<html:li>&ssleuth.pref.ciphersuites.note.5;</html:li>
-							<html:li>&ssleuth.pref.ciphersuites.note.6;</html:li>
+							<html:li>&sslrank.pref.ciphersuites.note.1;</html:li>
+							<html:li>&sslrank.pref.ciphersuites.note.2;</html:li>
+							<html:li>&sslrank.pref.ciphersuites.note.3;</html:li>
+							<html:li>&sslrank.pref.ciphersuites.note.4;</html:li>
+							<html:li>&sslrank.pref.ciphersuites.note.5;</html:li>
+							<html:li>&sslrank.pref.ciphersuites.note.6;</html:li>
 						</html:ul>
 
-						<description value="&ssleuth.pref.ciphersuites.note.restore;"/>
+						<description value="&sslrank.pref.ciphersuites.note.restore;"/>
 						<hbox>
-							<button label="&ssleuth.pref.ui.button.restore;" 
-											id="ssleuth-pref-mng-cs-entry-restore-default"
+							<button label="&sslrank.pref.ui.button.restore;"
+											id="sslrank-pref-mng-cs-entry-restore-default"
 											/>
 						</hbox>
 
 					</groupbox>
 
 					<groupbox>
-						<caption label="&ssleuth.pref.ciphersuites.reset.title;"/>
-						<description value="&ssleuth.pref.ciphersuites.reset.desc;"/>
+						<caption label="&sslrank.pref.ciphersuites.reset.title;"/>
+						<description value="&sslrank.pref.ciphersuites.reset.desc;"/>
 						<hbox>
-							<button label="&ssleuth.pref.ui.button.resetall;"
-											id="ssleuth-pref-cs-reset-all-cs"/>
+							<button label="&sslrank.pref.ui.button.resetall;"
+											id="sslrank-pref-cs-reset-all-cs"/>
 						</hbox>
 					</groupbox>
 		
 				</vbox>
 				</scrollbox>
 
-				<scrollbox id="ssleuth-pref-scroll-box" 
+				<scrollbox id="sslrank-pref-scroll-box"
 										flex="1" orient="vertical" tabindex="0"
 										active="true">
-				<vbox class="ssleuth-pref-view-container">
+				<vbox class="sslrank-pref-view-container">
 					<groupbox>
-						<caption label="SSleuth v0.5.4"/>
-						<description value="&ssleuth.pref.about.author; Sibi Antony"/>
-						<description class="ssleuth-pref-text" >
+						<caption label="SSLRank v0.5.5"/>
+						<description value="&sslrank.pref.about.author; Hyperbola Project"/>
+						<description class="sslrank-pref-text" >
 								Your feedback and development/translation support are welcome.
 								See the project page for more details.
 						</description>
 						<label class="text-link" 
-														href="https://github.com/sibiantony/ssleuth"
-														value="https://github.com/sibiantony/ssleuth"/>
+														href="https://pagure.io/sslrank"
+														value="https://pagure.io/sslrank"/>
 					</groupbox>
 					<groupbox>
-						<caption label='&ssleuth.pref.about.thanks;' />
+						<caption label='&sslrank.pref.about.thanks;' />
+							<description value=' • Sibi Antony (SSleuth)'/>
 							<description value=' • John Souvestre (beta tests)'/>
-							<description value='&ssleuth.pref.about.translations;'/>
+							<description value='&sslrank.pref.about.translations;'/>
 							<description value=' • Jei Four (de-DE)' />
 							<description value=' • Thomas PORTASSAU (fr-FR) 0.4.x' />
 							<description value=' • devmapper0 (pl-PL)' />
 					</groupbox>
 
 					<groupbox>
-						<caption label="&ssleuth.pref.about.license;"/>
-						<description class="ssleuth-pref-text">
-							SSleuth is free software: You can redistribute it and/or modify 
+						<caption label="&sslrank.pref.about.license;"/>
+						<description class="sslrank-pref-text">
+							SSLRank is free software: You can redistribute it and/or modify
 							it under the terms of the GNU General Public License as published by 
 							the Free Software Foundation, either version 3 of the License, or 
 							(at your option) any later version.
 						</description>
 
-						<description class="ssleuth-pref-text">
+						<description class="sslrank-pref-text">
 							This software is distributed in the hope that it will be useful, 
 							but WITHOUT ANY WARRANTY. See the GNU General Public License for more details.
 						</description>
@@ -380,10 +381,10 @@
 				</vbox>
 				</scrollbox>
 				<!-- Template 
-						<scrollbox id="ssleuth-pref-scroll-box" 
+						<scrollbox id="sslrank-pref-scroll-box"
 										flex="1" orient="vertical" tabindex="0"
 										active="true">
-				<vbox class="ssleuth-pref-view-container">
+				<vbox class="sslrank-pref-view-container">
 
 				</vbox>
 				</scrollbox-->

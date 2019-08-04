@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
     <r:RDF xmlns="http://www.mozilla.org/2004/em-rdf#" xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
         <r:Description about="urn:mozilla:install-manifest">
-            <creator>Sibi Antony</creator>
-            <description>How strong is your HTTPS connection? SSleuth ranks an established SSL/TLS connection and provides a brief summary of the SSL/TLS parameters. Lets users tweak cipher suites status.</description>
-            <homepageURL>https://github.com/sibiantony/ssleuth/</homepageURL>
-            <id>ssleuth@github</id>
-            <name>SSleuth</name>
-            <version>0.5.4</version>
-            <iconURL>chrome://ssleuth/skin/ssleuth-icon.png</iconURL>
-            <optionsURL>chrome://ssleuth/content/preferences.xul</optionsURL>
+            <creator>Hyperbola Project</creator>
+            <contributor>Sibi Antony</contributor>
+            <description>How strong is your HTTPS connection? SSLRank ranks an established SSL/TLS connection and provides a brief summary of the SSL/TLS parameters.</description>
+            <homepageURL>https://pagure.io/sslrank</homepageURL>
+            <id>sslrank@hyperbola.info</id>
+            <name>SSLRank</name>
+            <version>0.5.5</version>
+            <iconURL>chrome://sslrank/skin/sslrank-icon.png</iconURL>
+            <optionsURL>chrome://sslrank/content/preferences.xul</optionsURL>
             <optionsType>3</optionsType>
 
             <bootstrap>true</bootstrap>
@@ -18,7 +19,7 @@
             <targetApplication>
                 <r:Description>
                     <id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</id>
-                    <minVersion>42.0</minVersion>
+                    <minVersion>52.0</minVersion>
                     <maxVersion>52.*</maxVersion>
                 </r:Description>
             </targetApplication>
@@ -34,16 +35,16 @@
             <localized>
                 <r:Description>
                     <locale>de-DE</locale>
-                    <name>SSleuth</name>
-                    <description>Wie stark ist Ihre HTTPS-Verbindung? SSleuth ordnet eine bestehende SSL / TLS-Verbindung ein und bietet eine kurze Zusammenfassung der SSL / TLS-Parameter. Ermöglicht Benutzern, den Status der Chiffriersätze zu optimieren.</description>
+                    <name>SSLRank</name>
+                    <description>Wie stark ist Ihre HTTPS-Verbindung? SSLRank ordnet eine bestehende SSL / TLS-Verbindung ein und bietet eine kurze Zusammenfassung der SSL / TLS-Parameter.</description>
                 </r:Description>
             </localized>
-            
+
             <localized>
                 <r:Description>
                     <locale>pl-PL</locale>
-                    <name>SSleuth</name>
-                    <description>Jak silne jest Twoje połączenie HTTPS? SSleuth ocenia nawiązane połączenie SSL/TLS i dostarcza krótkie podsumowanie parametrów SSL/TLS. Pozwala użytkownikom poprawić status zestawów szyfrów.</description>
+                    <name>SSLRank</name>
+                    <description>Jak silne jest Twoje połączenie HTTPS? SSLRank ocenia nawiązane połączenie SSL/TLS i dostarcza krótkie podsumowanie parametrów SSL/TLS.</description>
                 </r:Description>
             </localized>
 

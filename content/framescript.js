@@ -9,8 +9,8 @@
 
     var cleanup = function () {
         removeEventListener("unload", onUnload);
-        removeMessageListener("ssleuth@github:shutdown", onShutdown);
-        removeMessageListener("ssleuth@github:win-id", sendWindowId);
+        removeMessageListener("sslrank@hyperbola.info:shutdown", onShutdown);
+        removeMessageListener("sslrank@hyperbola.info:win-id", sendWindowId);
     };
 
     var onShutdown = function (msg) {
@@ -21,7 +21,7 @@
 
     var onUnload = function (evt) {
 
-        sendAsyncMessage("ssleuth@github:tab-close", {
+        sendAsyncMessage("sslrank@hyperbola.info:tab-close", {
             id: windowId
         });
 
@@ -30,7 +30,7 @@
     };
 
     var onScriptId = function (msg) {
-        removeMessageListener("ssleuth@github:script-id", onScriptId);
+        removeMessageListener("sslrank@hyperbola.info:script-id", onScriptId);
         scriptId = msg.data.id;
     };
 
@@ -38,7 +38,7 @@
         var url = content.location,
             urlScheme = url.protocol.split(':')[0];
 
-        sendAsyncMessage("ssleuth@github:win-id", {
+        sendAsyncMessage("sslrank@hyperbola.info:win-id", {
             id: windowId,
             scheme: urlScheme,
             uri: url.toString()
@@ -47,8 +47,8 @@
     };
 
     addEventListener("unload", onUnload);
-    addMessageListener("ssleuth@github:script-id", onScriptId);
-    addMessageListener("ssleuth@github:shutdown", onShutdown);
-    addMessageListener("ssleuth@github:win-id", sendWindowId);
+    addMessageListener("sslrank@hyperbola.info:script-id", onScriptId);
+    addMessageListener("sslrank@hyperbola.info:shutdown", onShutdown);
+    addMessageListener("sslrank@hyperbola.info:win-id", sendWindowId);
 
 }());

@@ -6,9 +6,9 @@ const {
     utils: Cu
 } = Components;
 
-Cu.import('resource://ssleuth/observer.js');
+Cu.import('resource://sslrank/observer.js');
 Cu.import('resource://gre/modules/Services.jsm');
-Cu.import('resource://ssleuth/utils.js');
+Cu.import('resource://sslrank/utils.js');
 
 /*
  * Listener for messages from framescript, 
@@ -22,10 +22,10 @@ var listener = function (win) {
     var init = function (_callbacks) {
         callbacks = _callbacks;
         // This message won't be received if a window closes with many tabs in it.
-        win.messageManager.addMessageListener('ssleuth@github:tab-close', onTabClose, true);
+        win.messageManager.addMessageListener('sslrank@hyperbola.info:tab-close', onTabClose, true);
 
         windows.onUnload(win, function () {
-            win.messageManager.removeMessageListener('ssleuth@github:tab-close', onTabClose);
+            win.messageManager.removeMessageListener('sslrank@hyperbola.info:tab-close', onTabClose);
         });
     };
 
@@ -40,12 +40,12 @@ var listener = function (win) {
         // registration is ignored'. This works despite multiple message registrations.
         var frameMessageListener = function (msg) {
 
-            mm.removeMessageListener('ssleuth@github:win-id', frameMessageListener);
+            mm.removeMessageListener('sslrank@hyperbola.info:win-id', frameMessageListener);
             callback(msg.data);
         };
 
-        mm.addMessageListener('ssleuth@github:win-id', frameMessageListener);
-        win.gBrowser.selectedBrowser.messageManager.sendAsyncMessage('ssleuth@github:win-id', {});
+        mm.addMessageListener('sslrank@hyperbola.info:win-id', frameMessageListener);
+        win.gBrowser.selectedBrowser.messageManager.sendAsyncMessage('sslrank@hyperbola.info:win-id', {});
     };
 
     return {
